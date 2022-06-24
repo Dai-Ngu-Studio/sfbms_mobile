@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "736900397142",
+    "project_id": "sfbms-48a15",
+    "storage_bucket": "sfbms-48a15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736900397142:android:1e454f6bcbc90773d3e3f7",
+        "android_client_info": {
+          "package_name": "com.daingu.sfbms_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736900397142-2ff1a23b2j0erbd284isjm4v8dget0b8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daingu.sfbms_mobile",
+            "certificate_hash": "67e89ecc33dd74158973c0bd466ab02a27a1ab1a"
+          }
+        },
+        {
+          "client_id": "736900397142-nban7crncq39ik0726k2a24lgol4ad3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4rXF9tVhWk9vSwdQ2-CvbPp75U9sJ_V0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736900397142-nban7crncq39ik0726k2a24lgol4ad3s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
