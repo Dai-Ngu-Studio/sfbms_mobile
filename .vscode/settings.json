@@ -1,0 +1,9 @@
+{
+    "editor.minimap.maxColumn": 50,
+    "dart.lineLength": 100,
+    "[dart]": {
+        "editor.rulers": [
+            100
+        ]
+    },
+}
