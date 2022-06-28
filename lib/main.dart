@@ -1,13 +1,16 @@
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/colors.dart';
 import 'package:sfbms_mobile/firebase_options.dart';
 import 'package:sfbms_mobile/initializer_widget.dart';
 import 'package:sfbms_mobile/routes.dart';
+import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -21,6 +24,11 @@ class MyHttpOverrides extends HttpOverrides {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  if (kReleaseMode) {
+    await dotenv.load(fileName: "./env/.env");
+  } else {
+    await dotenv.load(fileName: "./env/development.env");
+  }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -41,6 +49,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => FieldViewModel()),
       ],
       child: MaterialApp(
         title: 'SFBMS',
