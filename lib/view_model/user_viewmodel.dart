@@ -54,6 +54,7 @@ class UserViewModel extends ChangeNotifier {
       await logout();
       rethrow;
     } catch (_) {
+      await logout();
       rethrow;
     }
   }
