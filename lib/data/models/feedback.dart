@@ -1,9 +1,13 @@
+import 'package:sfbms_mobile/data/models/field.dart';
+import 'package:sfbms_mobile/data/models/user.dart';
+
 class Feedback {
   int? id;
   String? userId;
-  String? user;
+  String? feedbackTime;
+  User? user;
   int? fieldId;
-  String? field;
+  Field? field;
   String? title;
   String? content;
   int? rating;
@@ -11,6 +15,7 @@ class Feedback {
   Feedback({
     this.id,
     this.userId,
+    this.feedbackTime,
     this.user,
     this.fieldId,
     this.field,
@@ -22,9 +27,10 @@ class Feedback {
   Feedback.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['userId'];
-    user = json['user'];
+    feedbackTime = json['feedbackTime'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     fieldId = json['fieldId'];
-    field = json['field'];
+    field = json['field'] != null ? Field.fromJson(json['field']) : null;
     title = json['title'];
     content = json['content'];
     rating = json['rating'];
@@ -34,9 +40,14 @@ class Feedback {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['userId'] = userId;
-    data['user'] = user;
+    data['feedbackTime'] = feedbackTime;
+    if (user != null) {
+      data['user'] = user!.toJson();
+    }
     data['fieldId'] = fieldId;
-    data['field'] = field;
+    if (field != null) {
+      data['field'] = field!.toJson();
+    }
     data['title'] = title;
     data['content'] = content;
     data['rating'] = rating;

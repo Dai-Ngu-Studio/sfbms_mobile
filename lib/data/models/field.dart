@@ -1,19 +1,43 @@
 import 'package:sfbms_mobile/data/models/category.dart';
-import 'package:sfbms_mobile/data/models/feedback.dart';
 import 'package:sfbms_mobile/data/models/slot.dart';
+
+class Fields {
+  List<Field>? fields;
+  int? numOfFieldPages;
+
+  Fields({this.fields, this.numOfFieldPages});
+
+  Fields.fromJson(Map<String, dynamic> json) {
+    if (json['fields'] != null) {
+      fields = <Field>[];
+      json['fields'].forEach((v) {
+        fields!.add(Field.fromJson(v));
+      });
+    }
+    numOfFieldPages = json['numOfFieldPages'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (fields != null) {
+      data['fields'] = fields!.map((v) => v.toJson()).toList();
+    }
+    data['numOfFieldPages'] = numOfFieldPages;
+    return data;
+  }
+}
 
 class Field {
   int? id;
   String? name;
   String? description;
-  int? price;
+  double? price;
   int? categoryId;
   Category? category;
   int? numberOfSlots;
   int? totalRating;
+  String? imageUrl;
   List<Slot>? slots;
-  List<Feedback>? feedbacks;
-  List<String>? bookingDetails;
 
   Field({
     this.id,
@@ -24,9 +48,8 @@ class Field {
     this.category,
     this.numberOfSlots,
     this.totalRating,
+    this.imageUrl,
     this.slots,
-    this.feedbacks,
-    this.bookingDetails,
   });
 
   Field.fromJson(Map<String, dynamic> json) {
@@ -35,23 +58,16 @@ class Field {
     description = json['description'];
     price = json['price'];
     categoryId = json['categoryId'];
-    category =
-        json['category'] != null ? Category.fromJson(json['category']) : null;
+    category = json['category'] != null ? Category.fromJson(json['category']) : null;
     numberOfSlots = json['numberOfSlots'];
     totalRating = json['totalRating'];
+    imageUrl = json['imageUrl'];
     if (json['slots'] != null) {
       slots = <Slot>[];
       json['slots'].forEach((v) {
         slots!.add(Slot.fromJson(v));
       });
     }
-    if (json['feedbacks'] != null) {
-      feedbacks = <Feedback>[];
-      json['feedbacks'].forEach((v) {
-        feedbacks!.add(Feedback.fromJson(v));
-      });
-    }
-    bookingDetails = json['bookingDetails'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -66,13 +82,10 @@ class Field {
     }
     data['numberOfSlots'] = numberOfSlots;
     data['totalRating'] = totalRating;
+    data['imageUrl'] = imageUrl;
     if (slots != null) {
       data['slots'] = slots!.map((v) => v.toJson()).toList();
     }
-    if (feedbacks != null) {
-      data['feedbacks'] = feedbacks!.map((v) => v.toJson()).toList();
-    }
-    data['bookingDetails'] = bookingDetails;
     return data;
   }
 }
