@@ -14,6 +14,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       dynamic response = await _apiService.postResponse(
         ApiEndPoint().user,
+        isOdataApi: false,
         function: "login",
         header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
       );
