@@ -8,16 +8,33 @@ import 'package:sfbms_mobile/data/remote/network/base_api_service.dart';
 
 class NetworkApiService extends BaseApiService {
   @override
-  Future getResponse(String url, {String? function, required header}) async {
+  Future getResponse(
+    String url, {
+    bool isOdataApi = true,
+    String? function,
+    required header,
+  }) async {
+    http.Response response;
     dynamic responseJson;
 
     try {
-      final response = await http
-          .get(
-            function == null ? Uri.parse("$baseUrl$url") : Uri.parse("$baseUrl$url/$function"),
-            headers: header,
-          )
-          .timeout(const Duration(seconds: 10));
+      if (isOdataApi) {
+        response = await http
+            .get(
+              function == null
+                  ? Uri.parse("$baseOdataUrl$url")
+                  : Uri.parse("$baseOdataUrl$url/$function"),
+              headers: header,
+            )
+            .timeout(const Duration(seconds: 10));
+      } else {
+        response = await http
+            .get(
+              function == null ? Uri.parse("$baseUrl$url") : Uri.parse("$baseUrl$url/$function"),
+              headers: header,
+            )
+            .timeout(const Duration(seconds: 10));
+      }
 
       responseJson = returnResponse(response);
     } on TimeoutException catch (_) {
@@ -30,17 +47,36 @@ class NetworkApiService extends BaseApiService {
   }
 
   @override
-  Future postResponse(String url, {String? function, required header, body}) async {
+  Future postResponse(
+    String url, {
+    bool isOdataApi = true,
+    String? function,
+    required header,
+    dynamic body,
+  }) async {
+    http.Response response;
     dynamic responseJson;
 
     try {
-      final response = await http
-          .post(
-            function == null ? Uri.parse("$baseUrl$url") : Uri.parse("$baseUrl$url/$function"),
-            headers: header,
-            body: body,
-          )
-          .timeout(const Duration(seconds: 10));
+      if (isOdataApi) {
+        response = await http
+            .post(
+              function == null
+                  ? Uri.parse("$baseOdataUrl$url")
+                  : Uri.parse("$baseOdataUrl$url/$function"),
+              headers: header,
+              body: body,
+            )
+            .timeout(const Duration(seconds: 10));
+      } else {
+        response = await http
+            .post(
+              function == null ? Uri.parse("$baseUrl$url") : Uri.parse("$baseUrl$url/$function"),
+              headers: header,
+              body: body,
+            )
+            .timeout(const Duration(seconds: 10));
+      }
 
       responseJson = returnResponse(response);
     } on TimeoutException catch (_) {
@@ -53,17 +89,33 @@ class NetworkApiService extends BaseApiService {
   }
 
   @override
-  Future putResponse(String url, {required header, body}) async {
+  Future putResponse(
+    String url, {
+    bool isOdataApi = true,
+    required header,
+    dynamic body,
+  }) async {
+    http.Response response;
     dynamic responseJson;
 
     try {
-      final response = await http
-          .put(
-            Uri.parse("$baseUrl$url"),
-            headers: header,
-            body: body,
-          )
-          .timeout(const Duration(seconds: 10));
+      if (isOdataApi) {
+        response = await http
+            .put(
+              Uri.parse("$baseOdataUrl$url"),
+              headers: header,
+              body: body,
+            )
+            .timeout(const Duration(seconds: 10));
+      } else {
+        response = await http
+            .put(
+              Uri.parse("$baseUrl$url"),
+              headers: header,
+              body: body,
+            )
+            .timeout(const Duration(seconds: 10));
+      }
 
       responseJson = returnResponse(response);
     } on TimeoutException catch (_) {
@@ -76,17 +128,33 @@ class NetworkApiService extends BaseApiService {
   }
 
   @override
-  Future deleteResponse(String url, {required header, body}) async {
+  Future deleteResponse(
+    String url, {
+    bool isOdataApi = true,
+    required header,
+    dynamic body,
+  }) async {
+    http.Response response;
     dynamic responseJson;
 
     try {
-      final response = await http
-          .put(
-            Uri.parse("$baseUrl$url"),
-            headers: header,
-            body: body,
-          )
-          .timeout(const Duration(seconds: 10));
+      if (isOdataApi) {
+        response = await http
+            .put(
+              Uri.parse("$baseOdataUrl$url"),
+              headers: header,
+              body: body,
+            )
+            .timeout(const Duration(seconds: 10));
+      } else {
+        response = await http
+            .put(
+              Uri.parse("$baseUrl$url"),
+              headers: header,
+              body: body,
+            )
+            .timeout(const Duration(seconds: 10));
+      }
 
       responseJson = returnResponse(response);
     } on TimeoutException catch (_) {
