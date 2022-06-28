@@ -32,6 +32,10 @@ dependencies:
 
   extended_image: ^6.2.1
 
+  pull_to_refresh: ^2.0.0
+
+  flutter_dotenv: ^5.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,6 +62,10 @@ flutter:
   uses-material-design: true
 
   assets:
+    # env
+    - env/.env
+    - env/development.env
+
     # image
     - assets/images/login_background.jpg
     - assets/images/logo_full.png
