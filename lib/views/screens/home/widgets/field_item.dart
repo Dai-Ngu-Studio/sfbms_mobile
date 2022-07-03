@@ -4,15 +4,18 @@ import 'package:intl/intl.dart';
 import 'package:sfbms_mobile/data/models/booking_time.dart';
 import 'package:sfbms_mobile/data/models/slot.dart';
 import 'package:sfbms_mobile/utils/utils.dart';
+import 'package:sfbms_mobile/views/screens/field_details/field_details_screen.dart';
 
 class FieldItem extends StatelessWidget {
   const FieldItem({
     Key? key,
+    required this.fieldID,
     required this.name,
     required this.imageUrl,
     required this.availableTime,
   }) : super(key: key);
 
+  final int fieldID;
   final String name;
   final String imageUrl;
   final List<Slot> availableTime;
@@ -25,7 +28,10 @@ class FieldItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 9),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
-        onTap: () {},
+        onTap: () => Navigator.of(context).pushNamed(
+          FieldDetailsScreen.routeName,
+          arguments: FieldDetailsScreenArguments(fieldID: fieldID),
+        ),
         child: Container(
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
@@ -44,31 +50,30 @@ class FieldItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(14),
-                child: ExtendedImage.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  cache: true,
-                  enableLoadState: true,
-                  height: 300,
-                  width: double.infinity,
+                child: Hero(
+                  tag: fieldID,
+                  child: ExtendedImage.network(
+                    imageUrl,
+                    fit: BoxFit.cover,
+                    cache: true,
+                    enableLoadState: true,
+                    height: 300,
+                    width: double.infinity,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
-                name,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              bookingTimes.isNotEmpty
-                  ? Container(
-                      margin: const EdgeInsets.only(top: 16),
-                      child: Text(
-                        "Available: ${bookingTimes.map((bookingTime) {
-                          return toBeginningOfSentenceCase(bookingTime.name.toLowerCase())!;
-                        }).join(", ")}",
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    )
-                  : const SizedBox.shrink()
+              Text(name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              if (bookingTimes.isNotEmpty)
+                Container(
+                  margin: const EdgeInsets.only(top: 16),
+                  child: Text(
+                    "Available: ${bookingTimes.map((bookingTime) {
+                      return toBeginningOfSentenceCase(bookingTime.name.toLowerCase())!;
+                    }).join(", ")}",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                )
             ],
           ),
         ),
