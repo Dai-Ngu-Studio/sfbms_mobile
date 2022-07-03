@@ -36,6 +36,10 @@ dependencies:
 
   flutter_dotenv: ^5.0.2
 
+  dropdown_button2: ^1.6.2
+
+  flutter_rating_bar: ^4.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
