@@ -29,7 +29,7 @@ class FieldRepositoryImpl implements FieldRepository {
   @override
   Future<Field> getFieldByID({
     required String idToken,
-    required String fieldID,
+    required int fieldID,
     String? odataSegment,
   }) async {
     dynamic response = odataSegment == null
