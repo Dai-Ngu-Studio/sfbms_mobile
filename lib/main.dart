@@ -10,7 +10,9 @@ import 'package:sfbms_mobile/constants/colors.dart';
 import 'package:sfbms_mobile/firebase_options.dart';
 import 'package:sfbms_mobile/initializer_widget.dart';
 import 'package:sfbms_mobile/routes.dart';
+import 'package:sfbms_mobile/view_model/feedback_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
+import 'package:sfbms_mobile/view_model/slot_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => UserViewModel()),
         ChangeNotifierProvider(create: (_) => FieldViewModel()),
+        ChangeNotifierProvider(create: (_) => FeedbackViewModel()),
+        ChangeNotifierProvider(create: (_) => SlotViewModel()),
       ],
       child: MaterialApp(
         title: 'SFBMS',
