@@ -29,7 +29,7 @@ class CustomAppBar extends StatelessWidget {
                 child: SizedBox(
                   height: 35,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).pushNamed(SearchScreen.routeName),
                     child: TextFormField(
                       enabled: false,
                       decoration: InputDecoration(
