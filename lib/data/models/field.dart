@@ -7,11 +7,11 @@ class Field {
   String? description;
   double? price;
   int? categoryId;
-  Category? category;
   int? numberOfSlots;
-  int? totalRating;
+  double? totalRating;
   String? imageUrl;
   List<Slot>? slots;
+  Category? category;
 
   Field({
     this.id,
@@ -19,11 +19,11 @@ class Field {
     this.description,
     this.price,
     this.categoryId,
-    this.category,
     this.numberOfSlots,
     this.totalRating,
     this.imageUrl,
     this.slots,
+    this.category,
   });
 
   Field.fromJson(Map<String, dynamic> json) {
@@ -32,7 +32,6 @@ class Field {
     description = json['description'];
     price = json['price'];
     categoryId = json['categoryId'];
-    category = json['category'] != null ? Category.fromJson(json['category']) : null;
     numberOfSlots = json['numberOfSlots'];
     totalRating = json['totalRating'];
     imageUrl = json['imageUrl'];
@@ -42,6 +41,7 @@ class Field {
         slots!.add(Slot.fromJson(v));
       });
     }
+    category = json['category'] != null ? Category.fromJson(json['category']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -51,14 +51,14 @@ class Field {
     data['description'] = description;
     data['price'] = price;
     data['categoryId'] = categoryId;
-    if (category != null) {
-      data['category'] = category!.toJson();
-    }
     data['numberOfSlots'] = numberOfSlots;
     data['totalRating'] = totalRating;
     data['imageUrl'] = imageUrl;
     if (slots != null) {
       data['slots'] = slots!.map((v) => v.toJson()).toList();
+    }
+    if (category != null) {
+      data['category'] = category!.toJson();
     }
     return data;
   }

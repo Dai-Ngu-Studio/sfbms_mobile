@@ -1,11 +1,14 @@
+import 'package:sfbms_mobile/data/models/field.dart';
+
 class Slot {
   int? id;
   int? fieldId;
-  String? field;
+  Field? field;
   String? startTime;
   String? endTime;
   int? status;
   int? slotNumber;
+  int? bookingStatus;
 
   Slot({
     this.id,
@@ -15,27 +18,32 @@ class Slot {
     this.endTime,
     this.status,
     this.slotNumber,
+    this.bookingStatus,
   });
 
   Slot.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     fieldId = json['fieldId'];
-    field = json['field'];
+    field = json['field'] != null ? Field.fromJson(json['field']) : null;
     startTime = json['startTime'];
     endTime = json['endTime'];
     status = json['status'];
     slotNumber = json['slotNumber'];
+    bookingStatus = json['bookingStatus'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['fieldId'] = fieldId;
-    data['field'] = field;
+    if (field != null) {
+      data['field'] = field!.toJson();
+    }
     data['startTime'] = startTime;
     data['endTime'] = endTime;
     data['status'] = status;
     data['slotNumber'] = slotNumber;
+    data['bookingStatus'] = bookingStatus;
     return data;
   }
 }
