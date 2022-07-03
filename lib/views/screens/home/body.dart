@@ -5,45 +5,25 @@ import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/home/widgets/field_item.dart';
 
-class Body extends StatefulWidget {
+class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
 
-  @override
-  State<Body> createState() => _BodyState();
-}
+  Future<bool?> _onRefresh({
+    bool isRefresh = false,
+    required FieldViewModel fieldVM,
+    required UserViewModel userVM,
+  }) async {
+    var result = await fieldVM.getFields(idToken: (await userVM.idToken)!, isRefresh: isRefresh);
 
-class _BodyState extends State<Body> {
-  final refreshController = RefreshController(initialRefresh: false);
-  FieldViewModel? fieldViewModel;
-  UserViewModel? userViewModel;
-  bool _isInit = true;
+    if (result == null) return null;
 
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      fieldViewModel = Provider.of<FieldViewModel>(context);
-      userViewModel = Provider.of<UserViewModel>(context);
-      _onRefresh();
-    }
-    _isInit = false;
-    super.didChangeDependencies();
-  }
-
-  Future<bool?> _onRefresh({bool isRefresh = false}) async {
-    var result = await fieldViewModel!.getFields(
-      idToken: (await userViewModel!.idToken)!,
-      isRefresh: isRefresh,
-    );
-
-    if (result == null) {
-      return null;
-    }
-
-    return true;
+    return result;
   }
 
   @override
   Widget build(BuildContext context) {
+    final refreshController = RefreshController(initialRefresh: true);
+
     return Consumer2<UserViewModel, FieldViewModel>(
       builder: ((context, userVM, fieldVM, _) {
         return SmartRefresher(
@@ -52,7 +32,7 @@ class _BodyState extends State<Body> {
           controller: refreshController,
           onRefresh: () async {
             refreshController.resetNoData();
-            var result = await _onRefresh(isRefresh: true);
+            var result = await _onRefresh(isRefresh: true, fieldVM: fieldVM, userVM: userVM);
 
             if (result!) {
               refreshController.refreshCompleted();
@@ -61,7 +41,7 @@ class _BodyState extends State<Body> {
             }
           },
           onLoading: () async {
-            final result = await _onRefresh();
+            final result = await _onRefresh(fieldVM: fieldVM, userVM: userVM);
 
             if (result == null) {
               refreshController.loadNoData();
@@ -83,6 +63,7 @@ class _BodyState extends State<Body> {
                 return const Center(child: Text("No fields found!."));
               }
               return FieldItem(
+                fieldID: fieldVM.fields.data!.fields![index].id!,
                 name: fieldVM.fields.data!.fields![index].name!,
                 imageUrl: fieldVM.fields.data!.fields![index].imageUrl!,
                 availableTime: fieldVM.fields.data!.fields![index].slots?.toList() ?? [],
