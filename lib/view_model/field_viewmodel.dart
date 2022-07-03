@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:sfbms_mobile/data/models/field.dart';
 import 'package:sfbms_mobile/data/models/fields.dart';
 import 'package:sfbms_mobile/data/remote/response/api_response.dart';
 import 'package:sfbms_mobile/data/repository/field_repository_impl.dart';
@@ -10,7 +11,7 @@ class FieldViewModel extends ChangeNotifier {
 
   ApiResponse<Fields> fields = ApiResponse.loading();
 
-  int currentPage = 1;
+  int currentPage = 0;
   int? totalPages;
 
   void _setFields(ApiResponse<Fields> response) {
@@ -22,19 +23,21 @@ class FieldViewModel extends ChangeNotifier {
   Future<bool?> getFields({
     required String idToken,
     bool isRefresh = false,
+    int quantityToGet = 2, // size of array of field need to get
   }) async {
     try {
-      var prevFields = fields.data?.fields;
+      var prevFields = fields.data?.fields; // previous request
 
       _setFields(ApiResponse.loading());
 
       if (isRefresh) {
-        currentPage = 1;
-      } else if (currentPage > (totalPages ?? 9999999)) {
+        currentPage = 0;
+      } else if (currentPage >= totalPages!) {
+        // last page -> no more data -> return null to set loadNoData for refreshController
         _setFields(ApiResponse.completed(
           Fields(
             fields: prevFields,
-            numOfFieldPages: totalPages,
+            odataCount: totalPages,
           ),
         ));
         return null;
@@ -42,7 +45,8 @@ class FieldViewModel extends ChangeNotifier {
 
       var response = await _fieldRepo.getFields(
         idToken: idToken,
-        odataSegment: "page=$currentPage&size=2",
+        odataSegment:
+            "\$count=true&\$skip=${quantityToGet * currentPage}&\$top=$quantityToGet&\$expand=Slots,Category",
       );
 
       if (isRefresh) {
@@ -52,7 +56,7 @@ class FieldViewModel extends ChangeNotifier {
           var tempFields = Fields(
             fields:
                 prevFields == null ? [...response.fields!] : [...prevFields, ...response.fields!],
-            numOfFieldPages: response.numOfFieldPages,
+            odataCount: response.odataCount,
           );
           _setFields(ApiResponse.completed(tempFields));
         }
@@ -60,11 +64,15 @@ class FieldViewModel extends ChangeNotifier {
 
       currentPage += 1;
 
-      totalPages = response.numOfFieldPages!;
+      totalPages = (response.odataCount! / quantityToGet).ceil();
       return true;
     } catch (e) {
       _setFields(ApiResponse.error(e.toString()));
       rethrow;
     }
+  }
+
+  Field findFieldByID(int fieldID) {
+    return fields.data!.fields!.firstWhere((field) => field.id == fieldID);
   }
 }
