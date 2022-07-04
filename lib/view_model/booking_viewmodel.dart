@@ -34,10 +34,7 @@ class BookingViewModel extends ChangeNotifier {
       } else if (currentPage >= totalPages!) {
         // reached last page, return null to set loadNoData for refreshController
         _setBookings(ApiResponse.completed(
-          Bookings(
-            bookings: prevBookings,
-            count: count,
-          ),
+          Bookings(bookings: prevBookings, count: count),
         ));
         return null;
       }

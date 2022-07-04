@@ -1,13 +1,13 @@
 import 'package:sfbms_mobile/data/models/field.dart';
 
 class Fields {
-  int? odataCount;
+  int? count;
   List<Field>? fields;
 
-  Fields({this.odataCount, this.fields});
+  Fields({this.count, this.fields});
 
   Fields.fromJson(Map<String, dynamic> json) {
-    odataCount = json['@odata.count'];
+    count = json['@odata.count'];
     if (json['value'] != null) {
       fields = <Field>[];
       json['value'].forEach((v) {

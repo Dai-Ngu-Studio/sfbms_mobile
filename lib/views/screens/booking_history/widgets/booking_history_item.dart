@@ -40,8 +40,10 @@ class BookingHistoryItem extends StatelessWidget {
                 "Booked on ${DateFormat("MMMM d, yyyy - hh:mm a").format(DateTime.parse(bookingDate).toLocal())}",
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
               ),
-              Text("${numberOfFields.toString()} sports field(s)",
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal)),
+              Text(
+                "${numberOfFields.toString()} sports field(s)",
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+              ),
             ],
           ),
         ),

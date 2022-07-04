@@ -23,7 +23,7 @@ class FieldViewModel extends ChangeNotifier {
   Future<bool?> getFields({
     required String idToken,
     bool isRefresh = false,
-    int quantityToGet = 2, // size of array of field need to get
+    int quantityToGet = 5, // size of array of field need to get
   }) async {
     try {
       var prevFields = fields.data?.fields; // previous request
@@ -35,10 +35,7 @@ class FieldViewModel extends ChangeNotifier {
       } else if (currentPage >= totalPages!) {
         // last page -> no more data -> return null to set loadNoData for refreshController
         _setFields(ApiResponse.completed(
-          Fields(
-            fields: prevFields,
-            odataCount: totalPages,
-          ),
+          Fields(fields: prevFields, count: totalPages),
         ));
         return null;
       }
@@ -56,7 +53,7 @@ class FieldViewModel extends ChangeNotifier {
           var tempFields = Fields(
             fields:
                 prevFields == null ? [...response.fields!] : [...prevFields, ...response.fields!],
-            odataCount: response.odataCount,
+            count: response.count,
           );
           _setFields(ApiResponse.completed(tempFields));
         }
@@ -64,7 +61,7 @@ class FieldViewModel extends ChangeNotifier {
 
       currentPage += 1;
 
-      totalPages = (response.odataCount! / quantityToGet).ceil();
+      totalPages = (response.count! / quantityToGet).ceil();
       return true;
     } catch (e) {
       _setFields(ApiResponse.error(e.toString()));

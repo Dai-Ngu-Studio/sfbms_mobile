@@ -16,19 +16,16 @@ class Body extends StatelessWidget {
       child: Column(
         children: [
           SettingMenuItem(
+            text: 'Your Bookings',
+            onPressed: () => Navigator.of(context).pushNamed(BookingHistoryScreen.routeName),
+          ),
+          SettingMenuItem(
             text: 'Logout',
             onPressed: () async {
               final navigator = Navigator.of(context);
               await Provider.of<UserViewModel>(context, listen: false).logout();
-              SharedPrefsHelper.remove(skipLogin);
               navigator.pushReplacementNamed(LoginScreen.routeName);
             },
-          ),
-          SettingMenuItem(
-            text: 'Your Bookings',
-            onPressed: () => Navigator.of(context).pushNamed(
-              BookingHistoryScreen.routeName,
-            ),
           ),
         ],
       ),

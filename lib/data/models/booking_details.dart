@@ -34,8 +34,7 @@ class BookingDetail {
   BookingDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     bookingId = json['bookingId'];
-    booking =
-        json['booking'] != null ? Booking.fromJson(json['booking']) : null;
+    booking = json['booking'] != null ? Booking.fromJson(json['booking']) : null;
     startTime = json['startTime'];
     endTime = json['endTime'];
     fieldId = json['fieldId'];
