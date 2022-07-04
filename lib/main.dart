@@ -10,6 +10,7 @@ import 'package:sfbms_mobile/constants/colors.dart';
 import 'package:sfbms_mobile/firebase_options.dart';
 import 'package:sfbms_mobile/initializer_widget.dart';
 import 'package:sfbms_mobile/routes.dart';
+import 'package:sfbms_mobile/view_model/booking_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/feedback_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/slot_viewmodel.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FieldViewModel()),
         ChangeNotifierProvider(create: (_) => FeedbackViewModel()),
         ChangeNotifierProvider(create: (_) => SlotViewModel()),
+        ChangeNotifierProvider(create: (_) => BookingViewModel()),
       ],
       child: MaterialApp(
         title: 'SFBMS',

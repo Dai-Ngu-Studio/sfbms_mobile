@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/shared_prefs.dart';
 import 'package:sfbms_mobile/data/local/shared_prefs_helper.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
+import 'package:sfbms_mobile/views/screens/booking_history/booking_history_screen.dart';
 import 'package:sfbms_mobile/views/screens/login/login_screen.dart';
 import 'package:sfbms_mobile/views/screens/settings/widgets/setting_menu_item.dart';
 
@@ -22,6 +23,12 @@ class Body extends StatelessWidget {
               SharedPrefsHelper.remove(skipLogin);
               navigator.pushReplacementNamed(LoginScreen.routeName);
             },
+          ),
+          SettingMenuItem(
+            text: 'Your Bookings',
+            onPressed: () => Navigator.of(context).pushNamed(
+              BookingHistoryScreen.routeName,
+            ),
           ),
         ],
       ),
