@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/colors.dart';
 import 'package:sfbms_mobile/data/models/booking_status.dart';
+import 'package:sfbms_mobile/data/models/slot_status.dart';
 import 'package:sfbms_mobile/data/remote/response/status.dart';
 import 'package:sfbms_mobile/view_model/slot_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
@@ -99,13 +100,20 @@ class _SlotBoxState extends State<SlotBox> {
                           disabledColor: Colors.grey.withOpacity(.4),
                           selectedColor: fieldColor,
                           side: slotVM.slots.data![index].bookingStatus ==
-                                  BookingDetailStatus.NOTYET.index
+                                      BookingDetailStatus.NOTYET.index &&
+                                  slotVM.slots.data![index].status == SlotStatus.AVAILABLE.index &&
+                                  DateTime.parse(slotVM.slots.data![index].startTime!)
+                                      .subtract(const Duration(hours: 7))
+                                      .toUtc()
+                                      .isAfter(DateTime.now().toUtc())
                               ? const BorderSide(color: Colors.black26)
                               : BorderSide(color: Colors.grey.withOpacity(.2)),
                           label: SizedBox(
                             width: double.infinity,
                             child: Text(
-                              "${index + 1}       ${DateFormat("HH:mm").format(DateTime.parse(slotVM.slots.data![index].startTime!))} - ${DateFormat("HH:mm").format(DateTime.parse(slotVM.slots.data![index].endTime!))}",
+                              "${index + 1}       "
+                              "${DateFormat("HH:mm").format(DateTime.parse(slotVM.slots.data![index].startTime!))} - "
+                              "${DateFormat("HH:mm").format(DateTime.parse(slotVM.slots.data![index].endTime!))}",
                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -116,7 +124,12 @@ class _SlotBoxState extends State<SlotBox> {
                           pressElevation: 0,
                           elevation: 0,
                           onSelected: slotVM.slots.data![index].bookingStatus ==
-                                  BookingDetailStatus.NOTYET.index
+                                      BookingDetailStatus.NOTYET.index &&
+                                  slotVM.slots.data![index].status == SlotStatus.AVAILABLE.index &&
+                                  DateTime.parse(slotVM.slots.data![index].startTime!)
+                                      .subtract(const Duration(hours: 7))
+                                      .toUtc()
+                                      .isAfter(DateTime.now().toUtc())
                               ? (selected) {}
                               : null,
                         ),
