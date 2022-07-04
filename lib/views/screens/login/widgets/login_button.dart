@@ -35,9 +35,9 @@ class _LoginButtonState extends State<LoginButton> {
 
                     if (isLoginSuccess) {
                       navigator.pushReplacementNamed(HomeScreen.routeName);
+                    } else {
+                      setState(() => _isLoading = false);
                     }
-
-                    setState(() => _isLoading = false);
                   } catch (e) {
                     setState(() => _isLoading = false);
                     _showErrorDialog(e.toString());
