@@ -2,10 +2,12 @@ import 'package:sfbms_mobile/data/models/user.dart';
 
 class Booking {
   int? id;
-  int? totalPrice;
+  double? totalPrice;
   String? userId;
   User? user;
   List<String>? bookingDetails;
+  String? bookingDate;
+  int? numberOfFields;
 
   Booking({
     this.id,
@@ -13,6 +15,8 @@ class Booking {
     this.userId,
     this.user,
     this.bookingDetails,
+    this.bookingDate,
+    this.numberOfFields,
   });
 
   Booking.fromJson(Map<String, dynamic> json) {
@@ -21,6 +25,8 @@ class Booking {
     userId = json['userId'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
     bookingDetails = json['bookingDetails'].cast<String>();
+    bookingDate = json['bookingDate'];
+    numberOfFields = json['numberOfFields'];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +38,8 @@ class Booking {
       data['user'] = user!.toJson();
     }
     data['bookingDetails'] = bookingDetails;
+    data['bookingDate'] = bookingDate;
+    data['numberOfFields'] = numberOfFields;
     return data;
   }
 }
