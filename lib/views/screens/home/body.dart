@@ -56,20 +56,19 @@ class Body extends StatelessWidget {
             loadStyle: LoadStyle.ShowWhenLoading,
             completeDuration: Duration(milliseconds: 500),
           ),
-          child: ListView.builder(
-            itemCount: fieldVM.fields.data?.fields?.length ?? 0,
-            itemBuilder: (context, index) {
-              if (fieldVM.fields.data == null) {
-                return const Center(child: Text("No fields found!."));
-              }
-              return FieldItem(
-                fieldID: fieldVM.fields.data!.fields![index].id!,
-                name: fieldVM.fields.data!.fields![index].name!,
-                imageUrl: fieldVM.fields.data!.fields![index].imageUrl!,
-                availableTime: fieldVM.fields.data!.fields![index].slots?.toList() ?? [],
-              );
-            },
-          ),
+          child: (fieldVM.fields.data?.fields?.isEmpty ?? true)
+              ? const Center(child: Text("No fields found!.", style: TextStyle(fontSize: 20)))
+              : ListView.builder(
+                  itemCount: fieldVM.fields.data?.fields?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    return FieldItem(
+                      fieldID: fieldVM.fields.data!.fields![index].id!,
+                      name: fieldVM.fields.data!.fields![index].name!,
+                      imageUrl: fieldVM.fields.data!.fields![index].imageUrl!,
+                      availableTime: fieldVM.fields.data!.fields![index].slots?.toList() ?? [],
+                    );
+                  },
+                ),
         );
       }),
     );

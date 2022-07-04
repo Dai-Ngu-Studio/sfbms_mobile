@@ -58,19 +58,18 @@ class Body extends StatelessWidget {
             loadStyle: LoadStyle.ShowWhenLoading,
             completeDuration: Duration(milliseconds: 500),
           ),
-          child: ListView.builder(
-            itemCount: bookingVM.bookings.data?.bookings?.length ?? 0,
-            itemBuilder: (context, index) {
-              if (bookingVM.bookings.data == null) {
-                return const Center(child: Text("No bookings found."));
-              }
-              return BookingHistoryItem(
-                bookingID: bookingVM.bookings.data!.bookings![index].id!,
-                bookingDate: bookingVM.bookings.data!.bookings![index].bookingDate!,
-                numberOfFields: bookingVM.bookings.data!.bookings![index].numberOfFields!,
-              );
-            },
-          ),
+          child: (bookingVM.bookings.data?.bookings?.isEmpty ?? true)
+              ? const Center(child: Text("No bookings found.", style: TextStyle(fontSize: 20)))
+              : ListView.builder(
+                  itemCount: bookingVM.bookings.data?.bookings?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    return BookingHistoryItem(
+                      bookingID: bookingVM.bookings.data!.bookings![index].id!,
+                      bookingDate: bookingVM.bookings.data!.bookings![index].bookingDate!,
+                      numberOfFields: bookingVM.bookings.data!.bookings![index].numberOfFields!,
+                    );
+                  },
+                ),
         );
       }),
     );
