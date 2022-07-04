@@ -1,1 +1,2 @@
-enum BookingDetailStatus { NOTYET, OPEN, ATTENDED, ABSENT }
+// ignore_for_file: constant_identifier_names
+enum BookingStatus { AVAILABLE, NOTAVAILABLE }

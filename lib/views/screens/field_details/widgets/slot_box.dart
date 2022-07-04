@@ -100,8 +100,8 @@ class _SlotBoxState extends State<SlotBox> {
                           disabledColor: Colors.grey.withOpacity(.4),
                           selectedColor: fieldColor,
                           side: slotVM.slots.data![index].bookingStatus ==
-                                      BookingDetailStatus.NOTYET.index &&
-                                  slotVM.slots.data![index].status == SlotStatus.AVAILABLE.index &&
+                                      BookingStatus.AVAILABLE.index &&
+                                  slotVM.slots.data![index].status == SlotStatus.OPEN.index &&
                                   DateTime.parse(slotVM.slots.data![index].startTime!)
                                       .subtract(const Duration(hours: 7))
                                       .toUtc()
@@ -124,8 +124,8 @@ class _SlotBoxState extends State<SlotBox> {
                           pressElevation: 0,
                           elevation: 0,
                           onSelected: slotVM.slots.data![index].bookingStatus ==
-                                      BookingDetailStatus.NOTYET.index &&
-                                  slotVM.slots.data![index].status == SlotStatus.AVAILABLE.index &&
+                                      BookingStatus.AVAILABLE.index &&
+                                  slotVM.slots.data![index].status == SlotStatus.OPEN.index &&
                                   DateTime.parse(slotVM.slots.data![index].startTime!)
                                       .subtract(const Duration(hours: 7))
                                       .toUtc()
