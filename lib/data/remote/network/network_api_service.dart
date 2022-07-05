@@ -53,6 +53,7 @@ class NetworkApiService extends BaseApiService {
     String? function,
     required header,
     dynamic body,
+    String? odataSegment,
   }) async {
     http.Response response;
     dynamic responseJson;
@@ -62,8 +63,8 @@ class NetworkApiService extends BaseApiService {
         response = await http
             .post(
               function == null
-                  ? Uri.parse("$baseOdataUrl$url")
-                  : Uri.parse("$baseOdataUrl$url/$function"),
+                  ? Uri.parse("$baseOdataUrl$url?$odataSegment")
+                  : Uri.parse("$baseOdataUrl$url/$function?$odataSegment"),
               headers: header,
               body: body,
             )
