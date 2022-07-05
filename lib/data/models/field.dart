@@ -1,4 +1,5 @@
 import 'package:sfbms_mobile/data/models/category.dart';
+import 'package:sfbms_mobile/data/models/feedback.dart';
 import 'package:sfbms_mobile/data/models/slot.dart';
 
 class Field {
@@ -12,6 +13,7 @@ class Field {
   String? imageUrl;
   List<Slot>? slots;
   Category? category;
+  List<Feedback>? feedbacks;
 
   Field({
     this.id,
@@ -24,6 +26,7 @@ class Field {
     this.imageUrl,
     this.slots,
     this.category,
+    this.feedbacks,
   });
 
   Field.fromJson(Map<String, dynamic> json) {
@@ -39,6 +42,12 @@ class Field {
       slots = <Slot>[];
       json['slots'].forEach((v) {
         slots!.add(Slot.fromJson(v));
+      });
+    }
+    if (json['feedbacks'] != null) {
+      feedbacks = <Feedback>[];
+      json['feedbacks'].forEach((v) {
+        feedbacks!.add(Feedback.fromJson(v));
       });
     }
     category = json['category'] != null ? Category.fromJson(json['category']) : null;
@@ -59,6 +68,9 @@ class Field {
     }
     if (category != null) {
       data['category'] = category!.toJson();
+    }
+    if (feedbacks != null) {
+      data['feedbacks'] = feedbacks!.map((v) => v.toJson()).toList();
     }
     return data;
   }
