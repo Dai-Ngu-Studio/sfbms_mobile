@@ -13,7 +13,7 @@ class BookingDetail {
   String? userId;
   User? user;
   int? slotNumber;
-  int? price;
+  double? price;
   int? status;
 
   BookingDetail({
