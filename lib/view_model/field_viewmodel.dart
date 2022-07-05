@@ -11,12 +11,20 @@ class FieldViewModel extends ChangeNotifier {
 
   ApiResponse<Fields> fields = ApiResponse.loading();
 
+  ApiResponse<Field> field = ApiResponse.loading();
+
   int currentPage = 0;
   int? totalPages;
 
   void _setFields(ApiResponse<Fields> response) {
     log(response.toString());
     fields = response;
+    notifyListeners();
+  }
+
+  void _setField(ApiResponse<Field> response) {
+    log(response.toString());
+    field = response;
     notifyListeners();
   }
 
@@ -69,7 +77,21 @@ class FieldViewModel extends ChangeNotifier {
     }
   }
 
-  Field findFieldByID(int fieldID) {
-    return fields.data!.fields!.firstWhere((field) => field.id == fieldID);
+  Future getField({required idToken, required int fieldID, DateTime? bookingDate}) async {
+    try {
+      _setField(ApiResponse.loading());
+
+      var response = await _fieldRepo.getFieldByID(
+        idToken: idToken,
+        fieldID: fieldID,
+        bookingDate: bookingDate ?? DateTime.now(),
+        odataSegment: "\$expand=Slots,Feedbacks(\$expand=User)",
+      );
+
+      _setField(ApiResponse.completed(response));
+    } catch (e) {
+      _setField(ApiResponse.error(e.toString()));
+      rethrow;
+    }
   }
 }
