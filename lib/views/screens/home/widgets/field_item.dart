@@ -59,6 +59,16 @@ class FieldItem extends StatelessWidget {
                     enableLoadState: true,
                     height: 300,
                     width: double.infinity,
+                    loadStateChanged: (ExtendedImageState state) {
+                      if (state.extendedImageLoadState == LoadState.failed) {
+                        return Image.network(
+                          'https://inantemnhan.com.vn/wp-content/uploads/2017/10/no-image.png',
+                          fit: BoxFit.cover,
+                        );
+                      }
+
+                      return null;
+                    },
                   ),
                 ),
               ),
