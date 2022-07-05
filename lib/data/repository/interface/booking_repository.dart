@@ -5,7 +5,7 @@ abstract class BookingRepository {
   Future<Bookings> getBookings({required String idToken, String? odataSegment});
   Future<Booking> getBookingByID({
     required String idToken,
-    required String bookingID,
+    required int bookingID,
     String? odataSegment,
   });
 }
