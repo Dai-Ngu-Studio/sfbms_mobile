@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sfbms_mobile/views/screens/booking_record/booking_record_screen.dart';
 
-class BookingHistoryItem extends StatelessWidget {
-  const BookingHistoryItem({
+class BookingRecordItem extends StatelessWidget {
+  const BookingRecordItem({
     Key? key,
-    required this.bookingID,
-    required this.bookingDate,
-    required this.numberOfFields,
+    required this.bookingDetailID,
+    required this.fieldName,
+    required this.startTime,
+    required this.endTime,
+    required this.bookingDetailStatus,
   }) : super(key: key);
 
-  final int bookingID;
-  final String bookingDate;
-  final int numberOfFields;
+  final int bookingDetailID;
+  final String fieldName;
+  final String startTime;
+  final String endTime;
+  final int bookingDetailStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +23,7 @@ class BookingHistoryItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 9),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
-        onTap: () => Navigator.of(context).pushNamed(
-          BookingRecordScreen.routeName,
-          arguments: BookingRecordScreenArguments(bookingID: bookingID),
-        ),
+        onTap: () => {},
         child: Container(
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
@@ -41,11 +41,15 @@ class BookingHistoryItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Booked on ${DateFormat("MMMM d, yyyy - hh:mm a").format(DateTime.parse(bookingDate).toLocal())}",
+                fieldName,
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
               ),
               Text(
-                "${numberOfFields.toString()} sports field(s)",
+                DateFormat("MMMM d, yyyy").format(DateTime.parse(startTime).toLocal()),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+              ),
+              Text(
+                "${DateFormat("hh:mm a").format(DateTime.parse(startTime).toLocal())} - ${DateFormat("hh:mm a").format(DateTime.parse(endTime).toLocal())}",
                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
               ),
             ],

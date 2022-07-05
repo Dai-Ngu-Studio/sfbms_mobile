@@ -1,3 +1,4 @@
+import 'package:sfbms_mobile/data/models/booking_details.dart';
 import 'package:sfbms_mobile/data/models/user.dart';
 
 class Booking {
@@ -5,7 +6,7 @@ class Booking {
   double? totalPrice;
   String? userId;
   User? user;
-  List<String>? bookingDetails;
+  List<BookingDetail>? bookingDetails;
   String? bookingDate;
   int? numberOfFields;
 
@@ -24,7 +25,12 @@ class Booking {
     totalPrice = json['totalPrice'];
     userId = json['userId'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
-    bookingDetails = json['bookingDetails'].cast<String>();
+    if (json['bookingDetails'] != null) {
+      bookingDetails = <BookingDetail>[];
+      json['bookingDetails'].forEach((v) {
+        bookingDetails!.add(BookingDetail.fromJson(v));
+      });
+    }
     bookingDate = json['bookingDate'];
     numberOfFields = json['numberOfFields'];
   }

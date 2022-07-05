@@ -12,7 +12,7 @@ class BookingRepositoryImpl implements BookingRepository {
   @override
   Future<Booking> getBookingByID({
     required String idToken,
-    required String bookingID,
+    required int bookingID,
     String? odataSegment,
   }) async {
     dynamic response = odataSegment == null
