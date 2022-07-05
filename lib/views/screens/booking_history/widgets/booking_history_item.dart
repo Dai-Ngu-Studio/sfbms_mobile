@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sfbms_mobile/views/screens/booking_record/booking_record_screen.dart';
 
 class BookingHistoryItem extends StatelessWidget {
   const BookingHistoryItem({
@@ -19,7 +20,10 @@ class BookingHistoryItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 9),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
-        onTap: () => {},
+        onTap: () => Navigator.of(context).pushNamed(
+          BookingRecordScreen.routeName,
+          arguments: BookingRecordScreenArguments(bookingID: bookingID),
+        ),
         child: Container(
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
