@@ -30,17 +30,16 @@ class FieldRepositoryImpl implements FieldRepository {
   Future<Field> getFieldByID({
     required String idToken,
     required int fieldID,
+    required DateTime bookingDate,
     String? odataSegment,
   }) async {
-    dynamic response = odataSegment == null
-        ? await _apiService.getResponse(
-            "${ApiEndPoint().field}/$fieldID",
-            header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
-          )
-        : await _apiService.getResponse(
-            "${ApiEndPoint().field}/$fieldID?$odataSegment",
-            header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
-          );
+    dynamic response = await _apiService.postResponse(
+      "${ApiEndPoint().field}/$fieldID",
+      header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
+      body: Map<String, String>.from({"BookingDate": bookingDate.toUtc().toIso8601String()}),
+      function: "SlotStatus",
+      odataSegment: "\$expand=Slots,Feedbacks(\$expand=User)",
+    );
 
     log('FieldRepositoryImpl :: getFieldByID :: response: $response');
 
