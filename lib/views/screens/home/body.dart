@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/home/widgets/field_item.dart';
+import 'package:sfbms_mobile/views/widgets/error_dialog.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -31,26 +32,38 @@ class Body extends StatelessWidget {
           enablePullUp: true,
           controller: refreshController,
           onRefresh: () async {
-            refreshController.resetNoData();
-            var result = await _onRefresh(isRefresh: true, fieldVM: fieldVM, userVM: userVM);
+            try {
+              refreshController.resetNoData();
+              var result = await _onRefresh(isRefresh: true, fieldVM: fieldVM, userVM: userVM);
 
-            if (result!) {
-              refreshController.refreshCompleted();
-            } else {
-              refreshController.loadFailed();
+              if (result!) {
+                refreshController.refreshCompleted();
+              } else {
+                refreshController.refreshFailed();
+              }
+            } catch (e) {
+              showErrorDialog(context: context, message: e.toString());
+              refreshController.refreshFailed();
             }
           },
-          onLoading: () async {
-            final result = await _onRefresh(fieldVM: fieldVM, userVM: userVM);
+          onLoading: fieldVM.fields.data?.fields?.isEmpty ?? true
+              ? refreshController.loadNoData
+              : () async {
+                  try {
+                    final result = await _onRefresh(fieldVM: fieldVM, userVM: userVM);
 
-            if (result == null) {
-              refreshController.loadNoData();
-            } else if (result) {
-              refreshController.loadComplete();
-            } else {
-              refreshController.loadFailed();
-            }
-          },
+                    if (result == null) {
+                      refreshController.loadNoData();
+                    } else if (result) {
+                      refreshController.loadComplete();
+                    } else {
+                      refreshController.loadFailed();
+                    }
+                  } catch (e) {
+                    showErrorDialog(context: context, message: e.toString());
+                    refreshController.loadFailed();
+                  }
+                },
           header: const WaterDropHeader(),
           footer: const ClassicFooter(
             loadStyle: LoadStyle.ShowWhenLoading,
