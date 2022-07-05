@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/gen/assets.gen.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/home/home_screen.dart';
+import 'package:sfbms_mobile/views/widgets/error_dialog.dart';
 
 class LoginButton extends StatefulWidget {
   const LoginButton({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _LoginButtonState extends State<LoginButton> {
                     }
                   } catch (e) {
                     setState(() => _isLoading = false);
-                    _showErrorDialog(e.toString());
+                    showErrorDialog(context: context, message: e.toString());
                   }
                 },
           style: ElevatedButton.styleFrom(
@@ -78,22 +79,6 @@ class _LoginButtonState extends State<LoginButton> {
             child: const Center(child: CircularProgressIndicator()),
           )
       ],
-    );
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('An Error Occurred!'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            child: const Text('Okay'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
     );
   }
 }
