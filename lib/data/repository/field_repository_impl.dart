@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:sfbms_mobile/data/models/field.dart';
@@ -35,8 +36,11 @@ class FieldRepositoryImpl implements FieldRepository {
   }) async {
     dynamic response = await _apiService.postResponse(
       "${ApiEndPoint().field}/$fieldID",
-      header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
-      body: Map<String, String>.from({"BookingDate": bookingDate.toUtc().toIso8601String()}),
+      header: Map<String, String>.from({
+        "Authorization": "Bearer $idToken",
+        "Content-Type": "application/json",
+      }),
+      body: json.encode({"BookingDate": bookingDate.toUtc().toIso8601String()}),
       function: "SlotStatus",
       odataSegment: "\$expand=Slots,Feedbacks(\$expand=User)",
     );
