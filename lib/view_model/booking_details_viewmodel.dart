@@ -2,19 +2,29 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:sfbms_mobile/data/models/booking.dart';
+import 'package:sfbms_mobile/data/models/booking_details.dart';
 import 'package:sfbms_mobile/data/remote/response/api_response.dart';
+import 'package:sfbms_mobile/data/repository/booking_detail_repository_impl.dart';
 import 'package:sfbms_mobile/data/repository/booking_repository_impl.dart';
 
 class BookingDetailsViewModel extends ChangeNotifier {
   final _bookingRepo = BookingRepositoryImpl();
+  final _bookingDetailRepo = BookingDetailRepositoryImpl();
 
   ApiResponse<Booking> booking = ApiResponse.loading();
+  ApiResponse<BookingDetail> bookingDetail = ApiResponse.loading();
 
   int? count;
 
   void _setBooking(ApiResponse<Booking> response) {
     log(response.toString());
     booking = response;
+    notifyListeners();
+  }
+
+  void _setBookingDetail(ApiResponse<BookingDetail> response) {
+    log(response.toString());
+    bookingDetail = response;
     notifyListeners();
   }
 
@@ -42,6 +52,26 @@ class BookingDetailsViewModel extends ChangeNotifier {
       } else {}
 
       return true;
+    } catch (e) {
+      _setBooking(ApiResponse.error(e.toString()));
+      rethrow;
+    }
+  }
+
+  Future getBookingDetail({
+    required idToken,
+    required int bookingDetailID,
+  }) async {
+    try {
+      _setBookingDetail(ApiResponse.loading());
+
+      var response = await _bookingDetailRepo.getBookingDetailByID(
+        idToken: idToken,
+        bookingDetailID: bookingDetailID,
+        odataSegment: "\$expand=Feedbacks,Field",
+      );
+
+      _setBookingDetail(ApiResponse.completed(response));
     } catch (e) {
       _setBooking(ApiResponse.error(e.toString()));
       rethrow;
