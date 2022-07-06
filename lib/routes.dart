@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sfbms_mobile/views/screens/book_field/book_field_screen.dart';
 import 'package:sfbms_mobile/views/screens/booking_detail_record/booking_detail_record_screen.dart';
 import 'package:sfbms_mobile/views/screens/booking_history/booking_history_screen.dart';
 import 'package:sfbms_mobile/views/screens/booking_record/booking_record_screen.dart';
@@ -17,4 +18,5 @@ final Map<String, WidgetBuilder> routes = {
   BookingHistoryScreen.routeName: (context) => const BookingHistoryScreen(),
   BookingRecordScreen.routeName: (context) => const BookingRecordScreen(),
   BookingDetailRecordScreen.routeName: (context) => const BookingDetailRecordScreen(),
+  BookFieldScreen.routeName: (context) => const BookFieldScreen(),
 };
