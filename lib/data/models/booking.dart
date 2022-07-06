@@ -43,7 +43,9 @@ class Booking {
     if (user != null) {
       data['user'] = user!.toJson();
     }
-    data['bookingDetails'] = bookingDetails;
+    if (bookingDetails != null) {
+      data['bookingDetails'] = bookingDetails!.map((v) => v.toJson()).toList();
+    }
     data['bookingDate'] = bookingDate;
     data['numberOfFields'] = numberOfFields;
     return data;

@@ -1,4 +1,5 @@
 import 'package:sfbms_mobile/data/models/booking.dart';
+import 'package:sfbms_mobile/data/models/feedback.dart';
 import 'package:sfbms_mobile/data/models/field.dart';
 import 'package:sfbms_mobile/data/models/user.dart';
 
@@ -15,6 +16,7 @@ class BookingDetail {
   int? slotNumber;
   double? price;
   int? status;
+  List<Feedback>? feedbacks;
 
   BookingDetail({
     this.id,
@@ -29,6 +31,7 @@ class BookingDetail {
     this.slotNumber,
     this.price,
     this.status,
+    this.feedbacks,
   });
 
   BookingDetail.fromJson(Map<String, dynamic> json) {
@@ -44,6 +47,12 @@ class BookingDetail {
     slotNumber = json['slotNumber'];
     price = json['price'];
     status = json['status'];
+    if (json['feedbacks'] != null) {
+      feedbacks = <Feedback>[];
+      json['feedbacks'].forEach((v) {
+        feedbacks!.add(Feedback.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +75,9 @@ class BookingDetail {
     data['slotNumber'] = slotNumber;
     data['price'] = price;
     data['status'] = status;
+    if (feedbacks != null) {
+      data['feedbacks'] = feedbacks!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

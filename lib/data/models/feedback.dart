@@ -1,3 +1,4 @@
+import 'package:sfbms_mobile/data/models/booking_details.dart';
 import 'package:sfbms_mobile/data/models/field.dart';
 import 'package:sfbms_mobile/data/models/user.dart';
 
@@ -8,6 +9,8 @@ class Feedback {
   User? user;
   int? fieldId;
   Field? field;
+  int? bookingDetailId;
+  BookingDetail? bookingDetail;
   String? title;
   String? content;
   int? rating;
@@ -19,6 +22,8 @@ class Feedback {
     this.user,
     this.fieldId,
     this.field,
+    this.bookingDetailId,
+    this.bookingDetail,
     this.title,
     this.content,
     this.rating,
@@ -31,6 +36,9 @@ class Feedback {
     user = json['user'] != null ? User.fromJson(json['user']) : null;
     fieldId = json['fieldId'];
     field = json['field'] != null ? Field.fromJson(json['field']) : null;
+    bookingDetailId = json['bookingDetailId'];
+    bookingDetail =
+        json['bookingDetail'] != null ? BookingDetail.fromJson(json['bookingDetail']) : null;
     title = json['title'];
     content = json['content'];
     rating = json['rating'];
@@ -47,6 +55,10 @@ class Feedback {
     data['fieldId'] = fieldId;
     if (field != null) {
       data['field'] = field!.toJson();
+    }
+    data['bookingDetailId'] = bookingDetailId;
+    if (bookingDetail != null) {
+      data['bookingDetail'] = bookingDetail!.toJson();
     }
     data['title'] = title;
     data['content'] = content;
