@@ -89,13 +89,7 @@ class Body extends StatelessWidget {
                   itemCount: bookingDetailsVM.booking.data?.bookingDetails?.length ?? 0,
                   itemBuilder: (context, index) {
                     return BookingRecordItem(
-                      bookingDetailID: (bookingDetailsVM.booking.data?.bookingDetails![index].id)!,
-                      fieldName:
-                          (bookingDetailsVM.booking.data?.bookingDetails![index].field!.name)!,
-                      startTime: (bookingDetailsVM.booking.data?.bookingDetails![index].startTime)!,
-                      endTime: (bookingDetailsVM.booking.data?.bookingDetails![index].endTime)!,
-                      bookingDetailStatus:
-                          (bookingDetailsVM.booking.data?.bookingDetails![index].status)!,
+                      bookingDetail: (bookingDetailsVM.booking.data?.bookingDetails![index])!,
                     );
                   }),
         );

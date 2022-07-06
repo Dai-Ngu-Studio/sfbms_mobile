@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sfbms_mobile/data/models/booking_details.dart';
+import 'package:sfbms_mobile/views/screens/booking_detail_record/booking_detail_record_screen.dart';
 
 class BookingRecordItem extends StatelessWidget {
   const BookingRecordItem({
     Key? key,
-    required this.bookingDetailID,
-    required this.fieldName,
-    required this.startTime,
-    required this.endTime,
-    required this.bookingDetailStatus,
+    required this.bookingDetail,
   }) : super(key: key);
 
-  final int bookingDetailID;
-  final String fieldName;
-  final String startTime;
-  final String endTime;
-  final int bookingDetailStatus;
+  final BookingDetail bookingDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +17,12 @@ class BookingRecordItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 9),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
-        onTap: () => {},
+        onTap: () => Navigator.of(context).pushNamed(
+          BookingDetailRecordScreen.routeName,
+          arguments: BookingDetailRecordScreenArguments(
+            bookingDetailID: bookingDetail.id!,
+          ),
+        ),
         child: Container(
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
@@ -41,15 +40,16 @@ class BookingRecordItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                fieldName,
+                bookingDetail.field!.name!,
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
               ),
               Text(
-                DateFormat("MMMM d, yyyy").format(DateTime.parse(startTime).toLocal()),
+                DateFormat("MMMM d, yyyy")
+                    .format(DateTime.parse(bookingDetail.startTime!).toLocal()),
                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
               ),
               Text(
-                "${DateFormat("hh:mm a").format(DateTime.parse(startTime).toLocal())} - ${DateFormat("hh:mm a").format(DateTime.parse(endTime).toLocal())}",
+                "${DateFormat("hh:mm a").format(DateTime.parse(bookingDetail.startTime!).toLocal())} - ${DateFormat("hh:mm a").format(DateTime.parse(bookingDetail.endTime!).toLocal())}",
                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
               ),
             ],
