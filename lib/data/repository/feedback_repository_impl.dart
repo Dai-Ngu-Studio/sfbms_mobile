@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:sfbms_mobile/data/models/feedback.dart';
@@ -27,5 +28,43 @@ class FeedbackRepositoryImpl implements FeedbackRepository {
     }
 
     return listFeedback;
+  }
+
+  @override
+  Future<Feedback> postFeedback({
+    required String idToken,
+    required Feedback feedback,
+  }) async {
+    dynamic response = await _apiService.postResponse(
+      ApiEndPoint().feedback,
+      header: Map<String, String>.from({
+        "Authorization": "Bearer $idToken",
+        "Content-Type": "application/json",
+      }),
+      body: json.encode(feedback),
+    );
+
+    log('FeedbackRepositoryImpl :: postFeedback :: response: $response');
+
+    return Feedback.fromJson(response);
+  }
+
+  @override
+  Future updateFeedback({
+    required String idToken,
+    required Feedback feedback,
+  }) async {
+    dynamic response = await _apiService.putResponse(
+      "${ApiEndPoint().feedback}/${feedback.id}",
+      header: Map<String, String>.from({
+        "Authorization": "Bearer $idToken",
+        "Content-Type": "application/json",
+      }),
+      body: json.encode(feedback),
+    );
+
+    log('FeedbackRepositoryImpl :: updateFeedback :: response: $response');
+
+    return response;
   }
 }
