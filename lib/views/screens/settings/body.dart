@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sfbms_mobile/gen/assets.gen.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/booking_history/booking_history_screen.dart';
 import 'package:sfbms_mobile/views/screens/login/login_screen.dart';
@@ -16,6 +17,31 @@ class Body extends StatelessWidget {
           SettingMenuItem(
             text: 'Your Bookings',
             onPressed: () => Navigator.of(context).pushNamed(BookingHistoryScreen.routeName),
+          ),
+          SettingMenuItem(
+            text: 'About',
+            onPressed: () {
+              showAboutDialog(
+                context: context,
+                applicationName: 'Field',
+                applicationIcon: Assets.images.logo.image(width: 75),
+                applicationVersion: '1.0.0',
+                applicationLegalese: '© 2022 Field',
+                routeSettings: const RouteSettings(name: 'about'),
+                children: [
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Field is a mobile application for booking fields that helps you to find best available fields.',
+                  ),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'We believe that our app will bring players closer to digital sport ecosystem.',
+                  ),
+                  const SizedBox(height: 16),
+                  const Text('Copyright © 2022 Field. All rights reserved.'),
+                ],
+              );
+            },
           ),
           SettingMenuItem(
             text: 'Logout',
