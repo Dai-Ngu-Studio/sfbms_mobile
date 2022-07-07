@@ -11,15 +11,56 @@ class FieldRepositoryImpl implements FieldRepository {
   final _apiService = NetworkApiService();
 
   @override
-  Future<Fields> getFields({required String idToken, String? odataSegment}) async {
+  Future<Fields> getFields({
+    required String idToken,
+    String? odataSegment,
+    String? searchValue,
+  }) async {
     dynamic response = odataSegment == null
         ? await _apiService.getResponse(
             ApiEndPoint().field,
             header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
           )
         : await _apiService.getResponse(
-            "${ApiEndPoint().field}?$odataSegment",
+            ApiEndPoint().field,
             header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
+            odataSegment:
+                "$odataSegment&\$filter=contains(tolower(Name),tolower('${searchValue?.trim() ?? ""}'))",
+          );
+
+    log('FieldRepositoryImpl :: getFields :: response: $response');
+
+    return Fields.fromJson(response);
+  }
+
+  @override
+  Future<Fields> getFieldsFilter({
+    required String idToken,
+    required String odataSegment,
+    List<int>? categoryIds,
+    String? searchValue,
+  }) async {
+    dynamic response = categoryIds == null
+        ? await _apiService.postResponse(
+            ApiEndPoint().field,
+            header: Map<String, String>.from({
+              "Authorization": "Bearer $idToken",
+              "Content-Type": "application/json",
+            }),
+            function: "Filter",
+            odataSegment:
+                "$odataSegment&\$filter=contains(tolower(Name),tolower('${searchValue?.trim() ?? ""}'))",
+          )
+        : await _apiService.postResponse(
+            ApiEndPoint().field,
+            header: Map<String, String>.from({
+              "Authorization": "Bearer $idToken",
+              "Content-Type": "application/json",
+            }),
+            function: "Filter",
+            body: json.encode({"CategoryIDs": categoryIds}),
+            odataSegment:
+                "$odataSegment&\$filter=contains(tolower(Name),tolower('${searchValue?.trim() ?? ""}'))",
           );
 
     log('FieldRepositoryImpl :: getFields :: response: $response');
