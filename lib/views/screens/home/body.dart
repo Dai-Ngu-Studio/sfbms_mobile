@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sfbms_mobile/data/providers/filter.dart';
 import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/home/widgets/field_item.dart';
+import 'package:sfbms_mobile/views/screens/home/widgets/filter_box.dart';
 import 'package:sfbms_mobile/views/widgets/error_dialog.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body({Key? key, required this.refreshController}) : super(key: key);
+
+  final RefreshController refreshController;
 
   Future<bool?> _onRefresh({
     bool isRefresh = false,
     required FieldViewModel fieldVM,
     required UserViewModel userVM,
+    required Filter filter,
   }) async {
-    var result = await fieldVM.getFields(idToken: (await userVM.idToken)!, isRefresh: isRefresh);
+    var result = await fieldVM.getFields(
+      idToken: (await userVM.idToken)!,
+      isRefresh: isRefresh,
+      categoryIds: filter.categories,
+      searchString: filter.searchValue,
+    );
 
     if (result == null) return null;
 
@@ -23,18 +33,24 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final refreshController = RefreshController(initialRefresh: true);
+    final filter = Provider.of<Filter>(context);
 
     return Consumer2<UserViewModel, FieldViewModel>(
-      builder: ((context, userVM, fieldVM, _) {
+      builder: ((context, userVM, fieldVM, child) {
         return SmartRefresher(
+          physics: const BouncingScrollPhysics(),
           enablePullDown: true,
           enablePullUp: true,
           controller: refreshController,
           onRefresh: () async {
             try {
               refreshController.resetNoData();
-              var result = await _onRefresh(isRefresh: true, fieldVM: fieldVM, userVM: userVM);
+              var result = await _onRefresh(
+                isRefresh: true,
+                fieldVM: fieldVM,
+                userVM: userVM,
+                filter: filter,
+              );
 
               if (result!) {
                 refreshController.refreshCompleted();
@@ -50,7 +66,8 @@ class Body extends StatelessWidget {
               ? refreshController.loadNoData
               : () async {
                   try {
-                    final result = await _onRefresh(fieldVM: fieldVM, userVM: userVM);
+                    final result =
+                        await _onRefresh(fieldVM: fieldVM, userVM: userVM, filter: filter);
 
                     if (result == null) {
                       refreshController.loadNoData();
@@ -70,20 +87,40 @@ class Body extends StatelessWidget {
             completeDuration: Duration(milliseconds: 500),
           ),
           child: (fieldVM.fields.data?.fields?.isEmpty ?? true)
-              ? const Center(child: Text("No fields found!.", style: TextStyle(fontSize: 20)))
-              : ListView.builder(
-                  itemCount: fieldVM.fields.data?.fields?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    return FieldItem(
-                      fieldID: fieldVM.fields.data!.fields![index].id!,
-                      name: fieldVM.fields.data!.fields![index].name!,
-                      imageUrl: fieldVM.fields.data!.fields![index].imageUrl!,
-                      availableTime: fieldVM.fields.data!.fields![index].slots?.toList() ?? [],
-                    );
-                  },
+              ? Column(
+                  children: [
+                    child!,
+                    const Expanded(
+                      child: Center(
+                        child: Text("No fields found!.", style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      child!,
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: fieldVM.fields.data?.fields?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return FieldItem(
+                            fieldID: fieldVM.fields.data!.fields![index].id!,
+                            name: fieldVM.fields.data!.fields![index].name!,
+                            imageUrl: fieldVM.fields.data!.fields![index].imageUrl,
+                            availableTime:
+                                fieldVM.fields.data!.fields![index].slots?.toList() ?? [],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
         );
       }),
+      child: FilterBox(refresh: refreshController.requestRefresh),
     );
   }
 }
