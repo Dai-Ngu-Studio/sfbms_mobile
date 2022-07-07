@@ -13,6 +13,7 @@ class NetworkApiService extends BaseApiService {
     bool isOdataApi = true,
     String? function,
     required header,
+    String? odataSegment,
   }) async {
     http.Response response;
     dynamic responseJson;
@@ -22,8 +23,8 @@ class NetworkApiService extends BaseApiService {
         response = await http
             .get(
               function == null
-                  ? Uri.parse("$baseOdataUrl$url")
-                  : Uri.parse("$baseOdataUrl$url/$function"),
+                  ? Uri.parse("$baseOdataUrl$url?$odataSegment")
+                  : Uri.parse("$baseOdataUrl$url/$function?$odataSegment"),
               headers: header,
             )
             .timeout(const Duration(seconds: 10));
