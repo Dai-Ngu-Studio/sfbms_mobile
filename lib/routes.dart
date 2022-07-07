@@ -7,6 +7,7 @@ import 'package:sfbms_mobile/views/screens/field_details/field_details_screen.da
 import 'package:sfbms_mobile/views/screens/home/home_screen.dart';
 import 'package:sfbms_mobile/views/screens/login/login_screen.dart';
 import 'package:sfbms_mobile/views/screens/settings/settings_screen.dart';
+import 'package:sfbms_mobile/views/screens/write_feedback/write_feedback_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => const LoginScreen(),
@@ -17,4 +18,5 @@ final Map<String, WidgetBuilder> routes = {
   BookingRecordScreen.routeName: (context) => const BookingRecordScreen(),
   BookingDetailRecordScreen.routeName: (context) => const BookingDetailRecordScreen(),
   BookFieldScreen.routeName: (context) => const BookFieldScreen(),
+  WriteFeedbackScreen.routeName: (context) => const WriteFeedbackScreen(),
 };
