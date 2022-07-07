@@ -11,13 +11,13 @@ class FieldItem extends StatelessWidget {
     Key? key,
     required this.fieldID,
     required this.name,
-    required this.imageUrl,
+    this.imageUrl,
     required this.availableTime,
   }) : super(key: key);
 
   final int fieldID;
   final String name;
-  final String imageUrl;
+  final String? imageUrl;
   final List<Slot> availableTime;
 
   @override
@@ -53,7 +53,7 @@ class FieldItem extends StatelessWidget {
                 child: Hero(
                   tag: fieldID,
                   child: ExtendedImage.network(
-                    imageUrl,
+                    imageUrl ?? "",
                     fit: BoxFit.cover,
                     cache: true,
                     enableLoadState: true,
