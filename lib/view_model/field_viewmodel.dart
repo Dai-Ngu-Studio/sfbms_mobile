@@ -32,6 +32,8 @@ class FieldViewModel extends ChangeNotifier {
     required String idToken,
     bool isRefresh = false,
     int quantityToGet = 5, // size of array of field need to get
+    List<int>? categoryIds,
+    String? searchString,
   }) async {
     try {
       var prevFields = fields.data?.fields; // previous request
@@ -48,11 +50,24 @@ class FieldViewModel extends ChangeNotifier {
         return null;
       }
 
-      var response = await _fieldRepo.getFields(
-        idToken: idToken,
-        odataSegment:
-            "\$count=true&\$skip=${quantityToGet * currentPage}&\$top=$quantityToGet&\$expand=Slots,Category",
-      );
+      Fields response;
+
+      if (categoryIds == null || categoryIds.isEmpty) {
+        response = await _fieldRepo.getFields(
+          idToken: idToken,
+          odataSegment:
+              "\$count=true&\$skip=${quantityToGet * currentPage}&\$top=$quantityToGet&\$expand=Slots,Category",
+          searchValue: searchString,
+        );
+      } else {
+        response = await _fieldRepo.getFieldsFilter(
+          idToken: idToken,
+          odataSegment:
+              "\$count=true&\$skip=${quantityToGet * currentPage}&\$top=$quantityToGet&\$expand=Slots,Category",
+          categoryIds: categoryIds,
+          searchValue: searchString,
+        );
+      }
 
       if (isRefresh) {
         _setFields(ApiResponse.completed(response));
