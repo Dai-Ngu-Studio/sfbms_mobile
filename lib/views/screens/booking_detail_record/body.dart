@@ -48,6 +48,8 @@ class _BodyState extends State<Body> {
                       bookingDetailStatus: bookingDetailsVM.bookingDetail.data!.status!),
                   DetailFeedbackBox(
                     feedbacks: bookingDetailsVM.bookingDetail.data!.feedbacks ?? [],
+                    bookingDetailID: bookingDetailsVM.bookingDetail.data!.id!,
+                    fieldID: bookingDetailsVM.bookingDetail.data!.fieldId!,
                   ),
                 ]);
               case Status.ERROR:
