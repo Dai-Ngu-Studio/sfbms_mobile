@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/colors.dart';
+import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
+import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/book_field/book_field_screen.dart';
 import 'package:sfbms_mobile/views/screens/field_details/body.dart';
 
@@ -17,9 +20,22 @@ class FieldDetailsScreen extends StatelessWidget {
       body: Body(fieldID: args.fieldID),
       floatingActionButton: InkWell(
         borderRadius: BorderRadius.circular(15),
-        onTap: () => Navigator.of(context).pushNamed(
+        onTap: () => Navigator.of(context)
+            .pushNamed(
           BookFieldScreen.routeName,
           arguments: BookFieldScreenArguments(args.fieldID),
+        )
+            .then(
+          (_) {
+            Provider.of<UserViewModel>(context, listen: false).idToken.then(
+              (idToken) {
+                Provider.of<FieldViewModel>(context, listen: false).getField(
+                  idToken: idToken,
+                  fieldID: args.fieldID,
+                );
+              },
+            );
+          },
         ),
         child: Container(
           width: MediaQuery.of(context).size.width - 35,
