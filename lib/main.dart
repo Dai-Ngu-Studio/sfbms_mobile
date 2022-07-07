@@ -7,11 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/colors.dart';
+import 'package:sfbms_mobile/data/providers/filter.dart';
 import 'package:sfbms_mobile/firebase_options.dart';
 import 'package:sfbms_mobile/initializer_widget.dart';
 import 'package:sfbms_mobile/routes.dart';
 import 'package:sfbms_mobile/view_model/booking_details_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/booking_viewmodel.dart';
+import 'package:sfbms_mobile/view_model/category_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/feedback_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/slot_viewmodel.dart';
@@ -57,7 +59,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FeedbackViewModel()),
         ChangeNotifierProvider(create: (_) => SlotViewModel()),
         ChangeNotifierProvider(create: (_) => BookingViewModel()),
-        ChangeNotifierProvider(create: (_) => BookingDetailsViewModel())
+        ChangeNotifierProvider(create: (_) => BookingDetailsViewModel()),
+        ChangeNotifierProvider(create: (_) => CategoryViewModel()),
+        ChangeNotifierProvider(create: (_) => Filter()),
       ],
       child: MaterialApp(
         title: 'SFBMS',
@@ -66,6 +70,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             elevation: 0,
             iconTheme: IconThemeData(color: Colors.white),
+            centerTitle: true,
             foregroundColor: Colors.white,
             systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
