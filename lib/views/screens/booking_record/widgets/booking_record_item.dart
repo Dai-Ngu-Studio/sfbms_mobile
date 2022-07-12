@@ -24,33 +24,31 @@ class BookingRecordItem extends StatelessWidget {
           ),
         ),
         child: Container(
-          padding: const EdgeInsets.all(12.0),
+          width: MediaQuery.of(context).size.width - 35,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.08),
-                blurRadius: 10,
-                spreadRadius: 5,
-              ),
-            ],
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.black26, width: 1.5),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                bookingDetail.field!.name!,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
+                child: Text(
+                  bookingDetail.field!.name!,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              Text(
-                DateFormat("MMMM d, yyyy")
-                    .format(DateTime.parse(bookingDetail.startTime!).toLocal()),
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
-              ),
-              Text(
-                "${DateFormat("hh:mm a").format(DateTime.parse(bookingDetail.startTime!).toLocal())} - ${DateFormat("hh:mm a").format(DateTime.parse(bookingDetail.endTime!).toLocal())}",
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
+                child: Text(
+                  "${DateFormat("MMMM d, yyyy | ").format(DateTime.parse(bookingDetail.startTime!))}"
+                  "${DateFormat("HH:mm").format(DateTime.parse(bookingDetail.startTime!))} - "
+                  "${DateFormat("HH:mm").format(DateTime.parse(bookingDetail.endTime!))}",
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),

@@ -25,28 +25,26 @@ class BookingHistoryItem extends StatelessWidget {
           arguments: BookingRecordScreenArguments(bookingID: bookingID),
         ),
         child: Container(
-          padding: const EdgeInsets.all(12.0),
+          width: MediaQuery.of(context).size.width - 35,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.08),
-                blurRadius: 10,
-                spreadRadius: 5,
-              ),
-            ],
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.black26, width: 1.5),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Booked on ${DateFormat("MMMM d, yyyy - hh:mm a").format(DateTime.parse(bookingDate).toLocal())}",
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
+                child: Text(
+                  "Booked on ${DateFormat("MMMM d, yyyy | HH:mm ").format(DateTime.parse(bookingDate))}",
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
-              Text(
-                "${numberOfFields.toString()} sports field(s)",
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
+                child: Text(
+                  "${numberOfFields.toString()} sports field(s)",
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),

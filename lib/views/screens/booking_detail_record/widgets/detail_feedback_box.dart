@@ -41,21 +41,20 @@ class DetailFeedbackBox extends StatelessWidget {
                 ? Center(
                     child: Container(
                       width: MediaQuery.of(context).size.width - 35,
-                      height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 7),
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            spreadRadius: 5,
+                        border: Border.all(color: Colors.black26, width: 1.5),
+                      ),
+                      child: Column(
+                        children: const [
+                          Padding(
+                            padding: EdgeInsets.only(top: 5, bottom: 5),
+                            child: Text(
+                              "Tap here to start writing.",
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ],
-                      ),
-                      child: const Center(
-                        child: Text('Tap here to start writing.'),
                       ),
                     ),
                   )
