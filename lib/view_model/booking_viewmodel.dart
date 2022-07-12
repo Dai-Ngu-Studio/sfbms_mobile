@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:sfbms_mobile/data/models/bookings.dart';
+import 'package:sfbms_mobile/data/models/cart_item.dart';
 import 'package:sfbms_mobile/data/remote/response/api_response.dart';
 import 'package:sfbms_mobile/data/repository/booking_repository_impl.dart';
 
@@ -23,7 +24,7 @@ class BookingViewModel extends ChangeNotifier {
   Future<bool?> getBookings({
     required String idToken,
     bool isRefresh = false,
-    int quantityToGet = 5, // size of array of bookings needed to fetch
+    int quantityToGet = 10, // size of array of bookings needed to fetch
   }) async {
     try {
       var prevBookings = bookings.data?.bookings; // bookings fetched from previous request
@@ -64,6 +65,20 @@ class BookingViewModel extends ChangeNotifier {
       return true;
     } catch (e) {
       _setBookings(ApiResponse.error(e.toString()));
+      rethrow;
+    }
+  }
+
+  Future postBooking({
+    required idToken,
+    required Map<String, CartItem> cartItems,
+  }) async {
+    try {
+      await _bookingRepo.postBooking(
+        idToken: idToken,
+        cartItems: cartItems,
+      );
+    } catch (e) {
       rethrow;
     }
   }
