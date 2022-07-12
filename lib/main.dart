@@ -14,6 +14,7 @@ import 'package:sfbms_mobile/routes.dart';
 import 'package:sfbms_mobile/view_model/booking_details_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/booking_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/category_viewmodel.dart';
+import 'package:sfbms_mobile/view_model/cart_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/feedback_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/slot_viewmodel.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BookingDetailsViewModel()),
         ChangeNotifierProvider(create: (_) => CategoryViewModel()),
         ChangeNotifierProvider(create: (_) => Filter()),
+        ChangeNotifierProvider(create: (_) => CartViewModel()),
       ],
       child: MaterialApp(
         title: 'SFBMS',
