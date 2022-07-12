@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/colors.dart';
 import 'package:sfbms_mobile/data/models/booking_status.dart';
 import 'package:sfbms_mobile/data/models/slot.dart';
 import 'package:sfbms_mobile/data/models/slot_status.dart';
+import 'package:sfbms_mobile/view_model/cart_viewmodel.dart';
 
-class BookSlotBox extends StatelessWidget {
+class BookSlotBox extends StatefulWidget {
   const BookSlotBox({
     Key? key,
     required this.fieldID,
@@ -16,6 +16,13 @@ class BookSlotBox extends StatelessWidget {
 
   final int fieldID;
   final List<Slot> slots;
+
+  @override
+  State<BookSlotBox> createState() => _BookSlotBoxState();
+}
+
+class _BookSlotBoxState extends State<BookSlotBox> {
+  var selectedIndexes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class BookSlotBox extends StatelessWidget {
           ),
           Text('Slots', style: Theme.of(context).textTheme.headline6),
           const SizedBox(height: 12),
-          slots.isEmpty
+          widget.slots.isEmpty
               ? Center(
                   child: RichText(
                     text: TextSpan(
@@ -62,7 +69,7 @@ class BookSlotBox extends StatelessWidget {
                   ),
                 )
               : ListView.builder(
-                  itemCount: slots.length,
+                  itemCount: widget.slots.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
@@ -72,9 +79,9 @@ class BookSlotBox extends StatelessWidget {
                         backgroundColor: Colors.white,
                         disabledColor: Colors.grey.withOpacity(.4),
                         selectedColor: fieldColor,
-                        side: slots[index].bookingStatus == BookingStatus.AVAILABLE.index &&
-                                slots[index].status == SlotStatus.OPEN.index &&
-                                DateTime.parse(slots[index].startTime!)
+                        side: widget.slots[index].bookingStatus == BookingStatus.AVAILABLE.index &&
+                                widget.slots[index].status == SlotStatus.OPEN.index &&
+                                DateTime.parse(widget.slots[index].startTime!)
                                     .subtract(const Duration(hours: 7))
                                     .toUtc()
                                     .isAfter(DateTime.now().toUtc())
@@ -84,24 +91,54 @@ class BookSlotBox extends StatelessWidget {
                           width: double.infinity,
                           child: Text(
                             "${index + 1}       "
-                            "${DateFormat("HH:mm").format(DateTime.parse(slots[index].startTime!))} - "
-                            "${DateFormat("HH:mm").format(DateTime.parse(slots[index].endTime!))}",
+                            "${DateFormat("HH:mm").format(DateTime.parse(widget.slots[index].startTime!))} - "
+                            "${DateFormat("HH:mm").format(DateTime.parse(widget.slots[index].endTime!))}",
                             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                        selected: false,
+                        selected: selectedIndexes.contains(index),
                         shadowColor: Colors.white,
                         pressElevation: 0,
                         elevation: 0,
-                        onSelected: slots[index].bookingStatus == BookingStatus.AVAILABLE.index &&
-                                slots[index].status == SlotStatus.OPEN.index &&
-                                DateTime.parse(slots[index].startTime!)
+                        onSelected: widget.slots[index].bookingStatus ==
+                                    BookingStatus.AVAILABLE.index &&
+                                widget.slots[index].status == SlotStatus.OPEN.index &&
+                                DateTime.parse(widget.slots[index].startTime!)
                                     .subtract(const Duration(hours: 7))
                                     .toUtc()
                                     .isAfter(DateTime.now().toUtc())
-                            ? (selected) {}
+                            ? !Provider.of<CartViewModel>(context, listen: false).containsItem(
+                                id: widget.slots[index].id!,
+                                startTime: widget.slots[index].startTime!,
+                              )
+                                ? (selected) {
+                                    setState(() {
+                                      if (selected) {
+                                        selectedIndexes.add(index);
+                                      } else {
+                                        selectedIndexes.remove(index);
+                                      }
+                                    });
+                                    var cartVM = Provider.of<CartViewModel>(context, listen: false);
+                                    if (selected) {
+                                      cartVM.addHoveringItem(
+                                        id: widget.slots[index].id!,
+                                        fieldId: widget.slots[index].fieldId!,
+                                        fieldName: widget.slots[index].field!.name!,
+                                        startTime: widget.slots[index].startTime!,
+                                        endTime: widget.slots[index].endTime!,
+                                        slotNumber: widget.slots[index].slotNumber!,
+                                      );
+                                    } else {
+                                      cartVM.removeHoveringItem(
+                                        id: widget.slots[index].id!,
+                                        startTime: widget.slots[index].startTime!,
+                                      );
+                                    }
+                                  }
+                                : null
                             : null,
                       ),
                     );

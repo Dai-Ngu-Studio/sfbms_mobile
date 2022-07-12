@@ -45,11 +45,6 @@ class _BodyState extends State<Body> {
   DateTime _selectedDate = DateTime.now();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(

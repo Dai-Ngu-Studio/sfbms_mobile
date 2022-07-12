@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/colors.dart';
+import 'package:sfbms_mobile/view_model/cart_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/book_field/book_field_screen.dart';
@@ -33,6 +34,7 @@ class FieldDetailsScreen extends StatelessWidget {
                   idToken: idToken,
                   fieldID: args.fieldID,
                 );
+                Provider.of<CartViewModel>(context, listen: false).clearHovering();
               },
             );
           },
