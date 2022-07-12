@@ -10,28 +10,7 @@ class FeedbackRepositoryImpl implements FeedbackRepository {
   final _apiService = NetworkApiService();
 
   @override
-  Future<List<Feedback>> getFeedbacksByFieldID({
-    required String idToken,
-    required int fieldID,
-  }) async {
-    dynamic response = await _apiService.getResponse(
-      "${ApiEndPoint().feedback}?\$filter=fieldId eq $fieldID&\$expand=User",
-      header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
-    );
-
-    log('FeedbackRepositoryImpl :: getFeedbacksByFieldID :: response: $response');
-
-    var listFeedback = <Feedback>[];
-
-    for (var feedback in response["value"]) {
-      listFeedback.add(Feedback.fromJson(feedback));
-    }
-
-    return listFeedback;
-  }
-
-  @override
-  Future<Feedback> postFeedback({
+  Future postFeedback({
     required String idToken,
     required Feedback feedback,
   }) async {
@@ -46,7 +25,7 @@ class FeedbackRepositoryImpl implements FeedbackRepository {
 
     log('FeedbackRepositoryImpl :: postFeedback :: response: $response');
 
-    return Feedback.fromJson(response);
+    return response;
   }
 
   @override
