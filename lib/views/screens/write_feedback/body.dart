@@ -5,6 +5,8 @@ import 'package:sfbms_mobile/constants/colors.dart';
 import 'package:sfbms_mobile/data/models/feedback.dart' as m_feedback;
 import 'package:sfbms_mobile/view_model/feedback_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
+import 'package:sfbms_mobile/views/screens/booking_detail_record/booking_detail_record_screen.dart';
+import 'package:sfbms_mobile/views/screens/booking_record/booking_record_screen.dart';
 import 'package:sfbms_mobile/views/widgets/error_dialog.dart';
 
 class Body extends StatefulWidget {
@@ -153,22 +155,23 @@ class _BodyState extends State<Body> {
                           ),
                         );
                       }
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const SimpleDialog(
-                            contentPadding: EdgeInsets.all(8.0),
-                            children: [
-                              Text(
-                                "Feedback posted successfully.",
-                              ),
-                            ],
-                          );
-                        },
-                      );
+
+                      if (mounted) {
+                        Navigator.of(context).popUntil(
+                          ModalRoute.withName(BookingRecordScreen.routeName),
+                        );
+                        Navigator.of(context).pushNamed(
+                          BookingDetailRecordScreen.routeName,
+                          arguments: BookingDetailRecordScreenArguments(
+                            bookingDetailID: widget.bookingDetailID,
+                          ),
+                        );
+                      }
                     } catch (e) {
                       showErrorDialog(
-                          context: context, message: "Could not post feedback. Please try again.");
+                        context: context,
+                        message: "Could not post feedback. Please try again.",
+                      );
                     }
                   },
                 );

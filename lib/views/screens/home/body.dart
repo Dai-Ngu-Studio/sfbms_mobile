@@ -92,7 +92,7 @@ class Body extends StatelessWidget {
                     child!,
                     const Expanded(
                       child: Center(
-                        child: Text("No fields found!.", style: TextStyle(fontSize: 20)),
+                        child: Text("No fields found!", style: TextStyle(fontSize: 20)),
                       ),
                     ),
                   ],
