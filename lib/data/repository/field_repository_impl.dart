@@ -83,7 +83,7 @@ class FieldRepositoryImpl implements FieldRepository {
       }),
       body: json.encode({"BookingDate": bookingDate.toUtc().toIso8601String()}),
       function: "SlotStatus",
-      odataSegment: "\$expand=Slots,Feedbacks(\$expand=User)",
+      odataSegment: "\$expand=Slots(\$expand=Field),Feedbacks(\$expand=User)",
     );
 
     log('FieldRepositoryImpl :: getFieldByID :: response: $response');

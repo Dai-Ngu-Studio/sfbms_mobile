@@ -20,8 +20,9 @@ class BookingDetailRepositoryImpl implements BookingDetailRepository {
             header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
           )
         : await _apiService.getResponse(
-            "${ApiEndPoint().bookingDetails}/$bookingDetailID?$odataSegment",
+            "${ApiEndPoint().bookingDetails}/$bookingDetailID",
             header: Map<String, String>.from({"Authorization": "Bearer $idToken"}),
+            odataSegment: odataSegment,
           );
     log('BookingDetailRepositoryImpl :: getBookingDetailByID :: response: $response');
 
