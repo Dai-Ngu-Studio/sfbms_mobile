@@ -3,6 +3,7 @@ import 'package:sfbms_mobile/views/screens/book_field/book_field_screen.dart';
 import 'package:sfbms_mobile/views/screens/booking_detail_record/booking_detail_record_screen.dart';
 import 'package:sfbms_mobile/views/screens/booking_history/booking_history_screen.dart';
 import 'package:sfbms_mobile/views/screens/booking_record/booking_record_screen.dart';
+import 'package:sfbms_mobile/views/screens/cart_details/cart_details_screen.dart';
 import 'package:sfbms_mobile/views/screens/field_details/field_details_screen.dart';
 import 'package:sfbms_mobile/views/screens/home/home_screen.dart';
 import 'package:sfbms_mobile/views/screens/login/login_screen.dart';
@@ -19,4 +20,5 @@ final Map<String, WidgetBuilder> routes = {
   BookingDetailRecordScreen.routeName: (context) => const BookingDetailRecordScreen(),
   BookFieldScreen.routeName: (context) => const BookFieldScreen(),
   WriteFeedbackScreen.routeName: (context) => const WriteFeedbackScreen(),
+  CartDetailsScreen.routeName: (context) => const CartDetailsScreen(),
 };
