@@ -80,6 +80,7 @@ class Body extends StatelessWidget {
                       bookingID: bookingVM.bookings.data!.bookings![index].id!,
                       bookingDate: bookingVM.bookings.data!.bookings![index].bookingDate!,
                       numberOfFields: bookingVM.bookings.data!.bookings![index].numberOfFields!,
+                      bookingDetails: bookingVM.bookings.data!.bookings![index].bookingDetails!,
                     );
                   },
                 ),

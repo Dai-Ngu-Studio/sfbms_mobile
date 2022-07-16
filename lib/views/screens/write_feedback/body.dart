@@ -132,40 +132,48 @@ class _BodyState extends State<Body> {
                 Provider.of<UserViewModel>(context, listen: false).idToken.then(
                   (idToken) async {
                     try {
-                      if (widget.feedback == null) {
-                        await Provider.of<FeedbackViewModel>(context, listen: false).postFeedback(
-                          idToken: idToken,
-                          feedback: m_feedback.Feedback(
-                            id: 0,
-                            fieldId: widget.fieldID,
-                            bookingDetailId: widget.bookingDetailID,
-                            title: titleController.text,
-                            content: contentController.text,
-                            rating: selectedRating,
-                          ),
+                      if (titleController.text.isEmpty || contentController.text.isEmpty) {
+                        showErrorDialog(
+                          context: context,
+                          message: "Title/content must not be empty.",
                         );
                       } else {
-                        await Provider.of<FeedbackViewModel>(context, listen: false).updateFeedback(
-                          idToken: idToken,
-                          feedback: m_feedback.Feedback(
-                            id: widget.feedback?.id,
-                            title: titleController.text,
-                            content: contentController.text,
-                            rating: selectedRating,
-                          ),
-                        );
-                      }
+                        if (widget.feedback == null) {
+                          await Provider.of<FeedbackViewModel>(context, listen: false).postFeedback(
+                            idToken: idToken,
+                            feedback: m_feedback.Feedback(
+                              id: 0,
+                              fieldId: widget.fieldID,
+                              bookingDetailId: widget.bookingDetailID,
+                              title: titleController.text,
+                              content: contentController.text,
+                              rating: selectedRating,
+                            ),
+                          );
+                        } else {
+                          await Provider.of<FeedbackViewModel>(context, listen: false)
+                              .updateFeedback(
+                            idToken: idToken,
+                            feedback: m_feedback.Feedback(
+                              id: widget.feedback?.id,
+                              title: titleController.text,
+                              content: contentController.text,
+                              rating: selectedRating,
+                            ),
+                          );
+                        }
 
-                      if (mounted) {
-                        Navigator.of(context).popUntil(
-                          ModalRoute.withName(BookingRecordScreen.routeName),
-                        );
-                        Navigator.of(context).pushNamed(
-                          BookingDetailRecordScreen.routeName,
-                          arguments: BookingDetailRecordScreenArguments(
-                            bookingDetailID: widget.bookingDetailID,
-                          ),
-                        );
+                        if (mounted) {
+                          Navigator.of(context).popUntil(
+                            ModalRoute.withName(BookingRecordScreen.routeName),
+                          );
+                          Navigator.of(context).pushNamed(
+                            BookingDetailRecordScreen.routeName,
+                            arguments: BookingDetailRecordScreenArguments(
+                              bookingDetailID: widget.bookingDetailID,
+                            ),
+                          );
+                        }
                       }
                     } catch (e) {
                       showErrorDialog(

@@ -50,6 +50,7 @@ class _BodyState extends State<Body> {
                     feedbacks: bookingDetailsVM.bookingDetail.data!.feedbacks ?? [],
                     bookingDetailID: bookingDetailsVM.bookingDetail.data!.id!,
                     fieldID: bookingDetailsVM.bookingDetail.data!.fieldId!,
+                    bookingDetailStatus: bookingDetailsVM.bookingDetail.data!.status!,
                   ),
                 ]);
               case Status.ERROR:

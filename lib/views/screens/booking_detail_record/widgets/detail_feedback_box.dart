@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sfbms_mobile/data/models/booking_details_status.dart';
 import 'package:sfbms_mobile/data/models/feedback.dart' as m_feedback;
 import 'package:sfbms_mobile/view_model/booking_details_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/booking_detail_record/widgets/detail_feedback_item.dart';
 import 'package:sfbms_mobile/views/screens/write_feedback/write_feedback_screen.dart';
+import 'package:sfbms_mobile/views/widgets/error_dialog.dart';
 
 class DetailFeedbackBox extends StatelessWidget {
   const DetailFeedbackBox({
@@ -12,11 +14,13 @@ class DetailFeedbackBox extends StatelessWidget {
     required this.feedbacks,
     required this.bookingDetailID,
     required this.fieldID,
+    required this.bookingDetailStatus,
   }) : super(key: key);
 
   final List<m_feedback.Feedback?> feedbacks;
   final int bookingDetailID;
   final int fieldID;
+  final int bookingDetailStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -66,25 +70,35 @@ class DetailFeedbackBox extends StatelessWidget {
                       return DetailFeedbackItem(feedback: feedbacks[index]!);
                     },
                   ),
-            onTap: () => Navigator.of(context)
-                .pushNamed(
-                  WriteFeedbackScreen.routeName,
-                  arguments: WriteFeedbackScreenArguments(
-                    feedback: feedbacks.isNotEmpty ? feedbacks.first : null,
-                    bookingDetailID: bookingDetailID,
-                    fieldID: fieldID,
-                  ),
-                )
-                .then(
-                  (_) => Provider.of<UserViewModel>(context, listen: false).idToken.then(
-                    (idToken) {
-                      Provider.of<BookingDetailsViewModel>(context, listen: false).getBookingDetail(
-                        idToken: idToken,
+            onTap: () {
+              if (bookingDetailStatus == BookingDetailStatus.ATTENDED.index) {
+                Navigator.of(context)
+                    .pushNamed(
+                      WriteFeedbackScreen.routeName,
+                      arguments: WriteFeedbackScreenArguments(
+                        feedback: feedbacks.isNotEmpty ? feedbacks.first : null,
                         bookingDetailID: bookingDetailID,
-                      );
-                    },
-                  ),
-                ),
+                        fieldID: fieldID,
+                      ),
+                    )
+                    .then(
+                      (_) => Provider.of<UserViewModel>(context, listen: false).idToken.then(
+                        (idToken) {
+                          Provider.of<BookingDetailsViewModel>(context, listen: false)
+                              .getBookingDetail(
+                            idToken: idToken,
+                            bookingDetailID: bookingDetailID,
+                          );
+                        },
+                      ),
+                    );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  "Sports field must be attended before giving feedback.",
+                )));
+              }
+            },
           ),
         ],
       ),
