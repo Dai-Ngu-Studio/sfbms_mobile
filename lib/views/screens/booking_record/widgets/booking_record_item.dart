@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sfbms_mobile/data/models/booking_details.dart';
+import 'package:sfbms_mobile/data/models/booking_details_status.dart';
 import 'package:sfbms_mobile/views/screens/booking_detail_record/booking_detail_record_screen.dart';
 
 class BookingRecordItem extends StatelessWidget {
@@ -26,6 +27,7 @@ class BookingRecordItem extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width - 35,
           decoration: BoxDecoration(
+            color: BookingDetailStatusMap.colorMap[bookingDetail.status],
             borderRadius: BorderRadius.circular(15),
             border: Border.all(color: Colors.black26, width: 1.5),
           ),

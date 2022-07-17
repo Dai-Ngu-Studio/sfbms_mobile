@@ -6,7 +6,6 @@ import 'package:sfbms_mobile/view_model/booking_details_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/booking_detail_record/widgets/detail_feedback_item.dart';
 import 'package:sfbms_mobile/views/screens/write_feedback/write_feedback_screen.dart';
-import 'package:sfbms_mobile/views/widgets/error_dialog.dart';
 
 class DetailFeedbackBox extends StatelessWidget {
   const DetailFeedbackBox({
@@ -93,7 +92,7 @@ class DetailFeedbackBox extends StatelessWidget {
                       ),
                     );
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text(
                   "Sports field must be attended before giving feedback.",
                 )));

@@ -30,6 +30,7 @@ class BookingDetailStatusBox extends StatelessWidget {
             child: Container(
               width: MediaQuery.of(context).size.width - 35,
               decoration: BoxDecoration(
+                color: BookingDetailStatusMap.colorMap[bookingDetailStatus],
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Colors.black26, width: 1.5),
               ),

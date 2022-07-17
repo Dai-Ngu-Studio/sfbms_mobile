@@ -33,7 +33,7 @@ class BookingHistoryItem extends StatelessWidget {
         ? "Not yet"
         : isFinished
             ? "Closed"
-            : "Available";
+            : "Unfinished";
 
     Text statusText = Text(
       text,
