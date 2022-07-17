@@ -43,6 +43,9 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
                                 cartItems: cartVM.items,
                               );
 
+                              cartVM.clear();
+                              cartVM.clearHovering();
+
                               if (mounted) {
                                 Navigator.of(context).popUntil(
                                   ModalRoute.withName(HomeScreen.routeName),
