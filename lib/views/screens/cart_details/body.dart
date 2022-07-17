@@ -17,7 +17,7 @@ class _BodyState extends State<Body> {
       padding: const EdgeInsets.only(bottom: 60.0),
       child: Consumer<CartViewModel>(
         builder: (context, cartVM, child) {
-          return Column(
+          return ListView(
             children: const [
               CartItemBox(),
             ],
