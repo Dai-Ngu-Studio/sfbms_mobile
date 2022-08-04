@@ -7,32 +7,20 @@ import 'package:sfbms_mobile/views/screens/booking_detail_record/widgets/booking
 import 'package:sfbms_mobile/views/screens/booking_detail_record/widgets/booking_detail_status_box.dart';
 import 'package:sfbms_mobile/views/screens/booking_detail_record/widgets/detail_feedback_box.dart';
 
-class Body extends StatefulWidget {
-  const Body({
-    Key? key,
-    required this.bookingDetailID,
-  }) : super(key: key);
+class Body extends StatelessWidget {
+  const Body({Key? key, required this.bookingDetailID}) : super(key: key);
 
   final int bookingDetailID;
 
   @override
-  State<Body> createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  @override
-  void didChangeDependencies() {
+  Widget build(BuildContext context) {
     Provider.of<UserViewModel>(context, listen: false).idToken.then((idToken) {
       Provider.of<BookingDetailsViewModel>(context, listen: false).getBookingDetail(
         idToken: idToken,
-        bookingDetailID: widget.bookingDetailID,
+        bookingDetailID: bookingDetailID,
       );
     });
-    super.didChangeDependencies();
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 60.0),
@@ -45,7 +33,8 @@ class _BodyState extends State<Body> {
                 return Column(children: [
                   BookingDetailInfoBox(bookingDetail: bookingDetailsVM.bookingDetail.data!),
                   BookingDetailStatusBox(
-                      bookingDetailStatus: bookingDetailsVM.bookingDetail.data!.status!),
+                    bookingDetailStatus: bookingDetailsVM.bookingDetail.data!.status!,
+                  ),
                   DetailFeedbackBox(
                     feedbacks: bookingDetailsVM.bookingDetail.data!.feedbacks ?? [],
                     bookingDetailID: bookingDetailsVM.bookingDetail.data!.id!,

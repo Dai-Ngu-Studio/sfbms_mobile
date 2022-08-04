@@ -11,7 +11,7 @@ class BookingDetailRecordScreen extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as BookingDetailRecordScreenArguments;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Booking Detail'), centerTitle: true),
+      appBar: AppBar(title: const Text('Booking Detail')),
       body: Body(bookingDetailID: args.bookingDetailID),
     );
   }

@@ -43,16 +43,18 @@ class BookingHistoryItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 9),
       child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: () => Navigator.of(context).pushNamed(
-          BookingRecordScreen.routeName,
-          arguments: BookingRecordScreenArguments(bookingID: bookingID),
-        ),
+        borderRadius: BorderRadius.circular(8),
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            BookingRecordScreen.routeName,
+            arguments: BookingRecordScreenArguments(bookingID: bookingID),
+          );
+        },
         child: Container(
           width: MediaQuery.of(context).size.width - 35,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: Colors.black26, width: 1.5),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.black26, width: 1),
           ),
           child: Column(
             children: [

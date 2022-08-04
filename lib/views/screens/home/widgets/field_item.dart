@@ -50,26 +50,23 @@ class FieldItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(14),
-                child: Hero(
-                  tag: fieldID,
-                  child: ExtendedImage.network(
-                    imageUrl ?? "",
-                    fit: BoxFit.cover,
-                    cache: true,
-                    enableLoadState: true,
-                    height: 300,
-                    width: double.infinity,
-                    loadStateChanged: (ExtendedImageState state) {
-                      if (state.extendedImageLoadState == LoadState.failed) {
-                        return Image.network(
-                          'https://inantemnhan.com.vn/wp-content/uploads/2017/10/no-image.png',
-                          fit: BoxFit.cover,
-                        );
-                      }
+                child: ExtendedImage.network(
+                  imageUrl ?? "",
+                  fit: BoxFit.cover,
+                  cache: true,
+                  enableLoadState: true,
+                  height: 300,
+                  width: double.infinity,
+                  loadStateChanged: (ExtendedImageState state) {
+                    if (state.extendedImageLoadState == LoadState.failed) {
+                      return Image.network(
+                        'https://inantemnhan.com.vn/wp-content/uploads/2017/10/no-image.png',
+                        fit: BoxFit.cover,
+                      );
+                    }
 
-                      return null;
-                    },
-                  ),
+                    return null;
+                  },
                 ),
               ),
               const SizedBox(height: 16),

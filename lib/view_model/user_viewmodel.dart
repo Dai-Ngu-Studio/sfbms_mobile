@@ -31,7 +31,6 @@ class UserViewModel extends ChangeNotifier {
   void _setAccount(ApiResponse<user_model.User> response) {
     log(response.toString());
     user = response;
-    notifyListeners();
   }
 
   Future<bool> login() async {

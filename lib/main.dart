@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/colors.dart';
 import 'package:sfbms_mobile/data/providers/filter.dart';
 import 'package:sfbms_mobile/firebase_options.dart';
-import 'package:sfbms_mobile/initializer_widget.dart';
 import 'package:sfbms_mobile/routes.dart';
 import 'package:sfbms_mobile/view_model/booking_details_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/booking_viewmodel.dart';
@@ -19,6 +18,8 @@ import 'package:sfbms_mobile/view_model/feedback_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/field_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/slot_viewmodel.dart';
 import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
+import 'package:sfbms_mobile/views/screens/home/home_screen.dart';
+import 'package:sfbms_mobile/views/screens/login/login_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -78,7 +79,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: const InitializerWidget(),
+        home: Selector<UserViewModel, bool>(
+          selector: (context, userVM) => userVM.isAuth,
+          builder: (context, isAuth, _) => isAuth ? const HomeScreen() : const LoginScreen(),
+        ),
         routes: routes,
       ),
     );

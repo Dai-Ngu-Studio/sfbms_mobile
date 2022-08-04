@@ -18,9 +18,7 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem({
-    required String cartItemId,
-  }) {
+  void removeItem({required String cartItemId}) {
     _items.remove(cartItemId);
     notifyListeners();
   }
@@ -30,10 +28,7 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool containsItem({
-    required int id,
-    required String startTime,
-  }) {
+  bool containsItem({required int id, required String startTime}) {
     var cartItemId = "${id}_$startTime";
     return _items.containsKey(cartItemId);
   }
@@ -63,10 +58,7 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeHoveringItem({
-    required int id,
-    required String startTime,
-  }) {
+  void removeHoveringItem({required int id, required String startTime}) {
     var cartItemId = "${id}_$startTime";
     _hoveringItems.remove(cartItemId);
     notifyListeners();

@@ -20,6 +20,7 @@ class Body extends StatelessWidget {
     );
 
     if (result == null) return null;
+
     return result;
   }
 

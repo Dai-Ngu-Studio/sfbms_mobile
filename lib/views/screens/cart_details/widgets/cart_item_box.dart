@@ -3,16 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/view_model/cart_viewmodel.dart';
 
-class CartItemBox extends StatefulWidget {
-  const CartItemBox({
-    Key? key,
-  }) : super(key: key);
+class CartItemBox extends StatelessWidget {
+  const CartItemBox({Key? key}) : super(key: key);
 
-  @override
-  State<CartItemBox> createState() => _CartItemBoxState();
-}
-
-class _CartItemBoxState extends State<CartItemBox> {
   @override
   Widget build(BuildContext context) {
     return Consumer<CartViewModel>(
@@ -21,24 +14,15 @@ class _CartItemBoxState extends State<CartItemBox> {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 12),
               Text('Selected Slots', style: Theme.of(context).textTheme.headline6),
               const SizedBox(height: 6),
-              Text('Swipe a slot to remove it', style: Theme.of(context).textTheme.caption),
+              if (slots.isNotEmpty)
+                Text('Swipe left to remove slot', style: Theme.of(context).textTheme.caption),
               const SizedBox(height: 12),
               slots.isEmpty
-                  ? Center(
-                      child: RichText(
-                        text: const TextSpan(
-                          style: TextStyle(color: Colors.black),
-                          children: [
-                            TextSpan(text: 'No slots have been added to cart.'),
-                          ],
-                        ),
-                      ),
-                    )
+                  ? const Center(child: Text('No slots have been added to cart.'))
                   : ListView.builder(
                       itemCount: slots.length,
                       shrinkWrap: true,
@@ -46,22 +30,22 @@ class _CartItemBoxState extends State<CartItemBox> {
                       itemBuilder: (context, index) {
                         return Dismissible(
                           background: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
+                            color: Theme.of(context).errorColor,
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.only(right: 20),
+                            child: const Icon(Icons.delete, color: Colors.white, size: 40),
                           ),
+                          direction: DismissDirection.endToStart,
                           key: Key(slots[index].cartItemId!),
                           onDismissed: (direction) {
-                            Provider.of<CartViewModel>(context, listen: false)
-                                .removeItem(cartItemId: slots[index].cartItemId!);
+                            cartVM.removeItem(cartItemId: slots[index].cartItemId!);
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             child: Container(
                               width: MediaQuery.of(context).size.width - 35,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(8),
                                 border: Border.all(color: Colors.black26, width: 1.5),
                               ),
                               child: Row(
@@ -86,7 +70,9 @@ class _CartItemBoxState extends State<CartItemBox> {
                                           "${DateFormat("HH:mm").format(DateTime.parse(slots[index].startTime!))} - "
                                           "${DateFormat("HH:mm").format(DateTime.parse(slots[index].endTime!))}",
                                           style: const TextStyle(
-                                              fontSize: 14, fontWeight: FontWeight.bold),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ],

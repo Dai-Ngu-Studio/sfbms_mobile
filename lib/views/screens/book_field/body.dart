@@ -8,10 +8,7 @@ import 'package:sfbms_mobile/view_model/user_viewmodel.dart';
 import 'package:sfbms_mobile/views/screens/book_field/widgets/book_slot_box.dart';
 
 class Body extends StatefulWidget {
-  const Body({
-    Key? key,
-    required this.fieldID,
-  }) : super(key: key);
+  const Body({Key? key, required this.fieldID}) : super(key: key);
 
   final int fieldID;
 

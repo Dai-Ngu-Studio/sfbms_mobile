@@ -14,22 +14,17 @@ class Body extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: mediaQuery.height * 0.75,
+          height: mediaQuery.height * 0.8,
           decoration: BoxDecoration(
-            image: DecorationImage(
-              image: Assets.images.loginBackground,
-              fit: BoxFit.cover,
-            ),
+            image: DecorationImage(image: Assets.images.loginBackground, fit: BoxFit.cover),
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-            child: Container(
-              decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
-            ),
+            child: Container(decoration: BoxDecoration(color: Colors.white.withOpacity(0.0))),
           ),
         ),
         SizedBox(
-          height: mediaQuery.height * 0.75,
+          height: mediaQuery.height * 0.8,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -39,11 +34,7 @@ class Body extends StatelessWidget {
                 child: const Text(
                   'Welcome',
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 60,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
               Container(
@@ -74,7 +65,7 @@ class Body extends StatelessWidget {
         ),
         Container(
           width: double.infinity,
-          margin: EdgeInsets.only(top: mediaQuery.height * 0.7),
+          margin: EdgeInsets.only(top: mediaQuery.height * 0.75),
           padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -89,11 +80,7 @@ class Body extends StatelessWidget {
               Text(
                 'More than 10,000 people are using Field',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black38,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black38),
               ),
               LoginButton(),
             ],

@@ -12,7 +12,7 @@ class WriteFeedbackScreen extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as WriteFeedbackScreenArguments;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Feedback'), centerTitle: true),
+      appBar: AppBar(title: const Text('Feedback')),
       body: Body(
         feedback: args.feedback,
         bookingDetailID: args.bookingDetailID,

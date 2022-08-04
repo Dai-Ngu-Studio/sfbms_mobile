@@ -17,28 +17,30 @@ class FieldDetailsScreen extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as FieldDetailsScreenArguments;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Field Details'), centerTitle: true),
+      appBar: AppBar(title: const Text('Field Details')),
       body: Body(fieldID: args.fieldID),
       floatingActionButton: InkWell(
         borderRadius: BorderRadius.circular(15),
-        onTap: () => Navigator.of(context)
-            .pushNamed(
-          BookFieldScreen.routeName,
-          arguments: BookFieldScreenArguments(args.fieldID),
-        )
-            .then(
-          (_) {
-            Provider.of<UserViewModel>(context, listen: false).idToken.then(
-              (idToken) {
-                Provider.of<FieldViewModel>(context, listen: false).getField(
-                  idToken: idToken,
-                  fieldID: args.fieldID,
-                );
-                Provider.of<CartViewModel>(context, listen: false).clearHovering();
-              },
-            );
-          },
-        ),
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed(
+            BookFieldScreen.routeName,
+            arguments: BookFieldScreenArguments(args.fieldID),
+          )
+              .then(
+            (_) {
+              Provider.of<UserViewModel>(context, listen: false).idToken.then(
+                (idToken) {
+                  Provider.of<FieldViewModel>(context, listen: false).getField(
+                    idToken: idToken,
+                    fieldID: args.fieldID,
+                  );
+                  Provider.of<CartViewModel>(context, listen: false).clearHovering();
+                },
+              );
+            },
+          );
+        },
         child: Container(
           width: MediaQuery.of(context).size.width - 35,
           height: 50,

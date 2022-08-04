@@ -12,26 +12,24 @@ class FieldInfoBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Hero(
-          tag: field.id!,
-          child: ExtendedImage.network(
-            field.imageUrl!,
-            fit: BoxFit.cover,
-            cache: true,
-            enableLoadState: true,
-            height: 220,
-            width: double.infinity,
-            loadStateChanged: (ExtendedImageState state) {
-              if (state.extendedImageLoadState == LoadState.failed) {
-                return Image.network(
-                  'https://inantemnhan.com.vn/wp-content/uploads/2017/10/no-image.png',
-                  fit: BoxFit.cover,
-                );
-              }
+        ExtendedImage.network(
+          field.imageUrl!,
+          fit: BoxFit.cover,
+          alignment: Alignment.topCenter,
+          cache: true,
+          enableLoadState: true,
+          height: MediaQuery.of(context).size.height * 0.32,
+          width: double.infinity,
+          loadStateChanged: (ExtendedImageState state) {
+            if (state.extendedImageLoadState == LoadState.failed) {
+              return Image.network(
+                'https://inantemnhan.com.vn/wp-content/uploads/2017/10/no-image.png',
+                fit: BoxFit.cover,
+              );
+            }
 
-              return null;
-            },
-          ),
+            return null;
+          },
         ),
         Container(
           width: double.infinity,

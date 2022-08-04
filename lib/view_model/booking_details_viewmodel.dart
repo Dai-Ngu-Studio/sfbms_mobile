@@ -58,10 +58,7 @@ class BookingDetailsViewModel extends ChangeNotifier {
     }
   }
 
-  Future getBookingDetail({
-    required idToken,
-    required int bookingDetailID,
-  }) async {
+  Future getBookingDetail({required idToken, required int bookingDetailID}) async {
     try {
       _setBookingDetail(ApiResponse.loading());
 

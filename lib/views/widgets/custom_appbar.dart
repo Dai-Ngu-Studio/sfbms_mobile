@@ -1,5 +1,4 @@
 import 'package:extended_image/extended_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +18,7 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userVM = Provider.of<UserViewModel>(context, listen: false);
     var filter = Provider.of<Filter>(context);
 
     final controller = TextEditingController(text: filter.searchValue);
@@ -97,7 +97,7 @@ class CustomAppBar extends StatelessWidget {
                 ),
               ),
             ),
-            Provider.of<UserViewModel>(context, listen: false).isAuth
+            userVM.isAuth
                 ? Padding(
                     padding: const EdgeInsets.all(12),
                     child: InkWell(
@@ -109,7 +109,7 @@ class CustomAppBar extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(50),
                           child: ExtendedImage.network(
-                            FirebaseAuth.instance.currentUser!.photoURL!,
+                            userVM.userPhotoURL!,
                             cache: true,
                           ),
                         ),

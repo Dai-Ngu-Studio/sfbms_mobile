@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sfbms_mobile/data/models/feedback.dart' as m_feedback;
 
 class DetailFeedbackItem extends StatelessWidget {
-  const DetailFeedbackItem({
-    Key? key,
-    required this.feedback,
-  }) : super(key: key);
+  const DetailFeedbackItem({Key? key, required this.feedback}) : super(key: key);
 
   final m_feedback.Feedback feedback;
 

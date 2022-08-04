@@ -69,15 +69,9 @@ class BookingViewModel extends ChangeNotifier {
     }
   }
 
-  Future postBooking({
-    required idToken,
-    required Map<String, CartItem> cartItems,
-  }) async {
+  Future postBooking({required idToken, required Map<String, CartItem> cartItems}) async {
     try {
-      await _bookingRepo.postBooking(
-        idToken: idToken,
-        cartItems: cartItems,
-      );
+      await _bookingRepo.postBooking(idToken: idToken, cartItems: cartItems);
     } catch (e) {
       rethrow;
     }

@@ -37,11 +37,10 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
                         Provider.of<UserViewModel>(context, listen: false).idToken.then(
                           (idToken) async {
                             try {
-                              await Provider.of<BookingViewModel>(context, listen: false)
-                                  .postBooking(
-                                idToken: idToken,
-                                cartItems: cartVM.items,
-                              );
+                              await Provider.of<BookingViewModel>(
+                                context,
+                                listen: false,
+                              ).postBooking(idToken: idToken, cartItems: cartVM.items);
 
                               cartVM.clear();
                               cartVM.clearHovering();
@@ -63,12 +62,12 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
                         );
                       },
                       child: Container(
-                        width: MediaQuery.of(context).size.width -
-                            MediaQuery.of(context).size.width * 0.5,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        margin: const EdgeInsets.only(left: 32),
                         height: 50,
                         decoration: BoxDecoration(
                           color: fieldColor,
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
                               offset: const Offset(0, 7),
@@ -82,18 +81,21 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
                           child: Text(
                             'Book',
                             style: TextStyle(
-                                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     )
                   : Container(
-                      width: MediaQuery.of(context).size.width -
-                          MediaQuery.of(context).size.width * 0.5,
+                      width: MediaQuery.of(context).size.width - 34,
+                      margin: const EdgeInsets.only(left: 34),
                       height: 50,
                       decoration: BoxDecoration(
                         color: Colors.grey,
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
                             offset: const Offset(0, 7),

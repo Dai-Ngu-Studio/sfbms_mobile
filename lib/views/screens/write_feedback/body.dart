@@ -1,5 +1,5 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:sfbms_mobile/constants/colors.dart';
 import 'package:sfbms_mobile/data/models/feedback.dart' as m_feedback;
@@ -45,40 +45,17 @@ class _BodyState extends State<Body> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          DropdownButtonFormField2(
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.zero,
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-              prefixIcon: const Icon(Icons.star_border_rounded, color: Colors.black87, size: 22),
-            ),
-            isExpanded: true,
-            hint: Text(
-              "$selectedRating",
-              style: const TextStyle(fontSize: 16, color: Colors.black87),
-            ),
-            icon: const Icon(Icons.arrow_drop_down, color: Colors.black87),
-            iconSize: 30,
-            buttonHeight: 60,
-            buttonWidth: double.infinity,
-            buttonPadding: const EdgeInsets.only(right: 20),
-            dropdownDecoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-            items: [0, 1, 2, 3, 4, 5].map((item) {
-              return DropdownMenuItem(
-                value: item,
-                child: Text(
-                  item.toString(),
-                  style: const TextStyle(fontSize: 14, color: Colors.black),
-                ),
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() => selectedRating = value as int);
-            },
-            onSaved: (value) => selectedRating = value as int,
+          RatingBar.builder(
+            initialRating: widget.feedback?.rating?.toDouble() ?? 5,
+            minRating: 1,
+            direction: Axis.horizontal,
+            itemCount: 5,
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+            itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber),
+            onRatingUpdate: (rating) => selectedRating = rating.toInt(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.all(8),
             child: TextField(
               controller: titleController,
               decoration: InputDecoration(
@@ -90,7 +67,7 @@ class _BodyState extends State<Body> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.all(8),
             child: TextField(
               controller: contentController,
               decoration: InputDecoration(
@@ -104,13 +81,13 @@ class _BodyState extends State<Body> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: InkWell(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(8),
               child: Container(
                 width: MediaQuery.of(context).size.width - 35,
                 height: 50,
                 decoration: BoxDecoration(
                   color: fieldColor,
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
                       offset: const Offset(0, 7),

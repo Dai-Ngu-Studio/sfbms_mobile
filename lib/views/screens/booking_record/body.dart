@@ -7,10 +7,7 @@ import 'package:sfbms_mobile/views/screens/booking_record/widgets/booking_record
 import 'package:sfbms_mobile/views/widgets/error_dialog.dart';
 
 class Body extends StatelessWidget {
-  const Body({
-    Key? key,
-    required this.bookingID,
-  }) : super(key: key);
+  const Body({Key? key, required this.bookingID}) : super(key: key);
 
   final int bookingID;
 
@@ -84,14 +81,16 @@ class Body extends StatelessWidget {
           ),
           child: (bookingDetailsVM.booking.data?.bookingDetails?.isEmpty ?? true)
               ? const Center(
-                  child: Text("No booking details found.", style: TextStyle(fontSize: 20)))
+                  child: Text("No booking details found.", style: TextStyle(fontSize: 20)),
+                )
               : ListView.builder(
                   itemCount: bookingDetailsVM.booking.data?.bookingDetails?.length ?? 0,
                   itemBuilder: (context, index) {
                     return BookingRecordItem(
                       bookingDetail: (bookingDetailsVM.booking.data?.bookingDetails![index])!,
                     );
-                  }),
+                  },
+                ),
         );
       }),
     );

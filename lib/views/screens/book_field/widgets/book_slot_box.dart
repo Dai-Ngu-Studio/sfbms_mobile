@@ -8,11 +8,7 @@ import 'package:sfbms_mobile/data/models/slot_status.dart';
 import 'package:sfbms_mobile/view_model/cart_viewmodel.dart';
 
 class BookSlotBox extends StatefulWidget {
-  const BookSlotBox({
-    Key? key,
-    required this.fieldID,
-    required this.slots,
-  }) : super(key: key);
+  const BookSlotBox({Key? key, required this.fieldID, required this.slots}) : super(key: key);
 
   final int fieldID;
   final List<Slot> slots;

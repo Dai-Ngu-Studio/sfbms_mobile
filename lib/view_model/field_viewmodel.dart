@@ -38,15 +38,12 @@ class FieldViewModel extends ChangeNotifier {
     try {
       var prevFields = fields.data?.fields; // previous request
 
-      _setFields(ApiResponse.loading());
-
       if (isRefresh) {
+        _setField(ApiResponse.loading());
         currentPage = 0;
       } else if (currentPage >= totalPages!) {
         // last page -> no more data -> return null to set loadNoData for refreshController
-        _setFields(ApiResponse.completed(
-          Fields(fields: prevFields, count: totalPages),
-        ));
+        _setFields(ApiResponse.completed(Fields(fields: prevFields, count: totalPages)));
         return null;
       }
 

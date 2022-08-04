@@ -5,10 +5,7 @@ import 'package:sfbms_mobile/data/models/booking_details_status.dart';
 import 'package:sfbms_mobile/views/screens/booking_detail_record/booking_detail_record_screen.dart';
 
 class BookingRecordItem extends StatelessWidget {
-  const BookingRecordItem({
-    Key? key,
-    required this.bookingDetail,
-  }) : super(key: key);
+  const BookingRecordItem({Key? key, required this.bookingDetail}) : super(key: key);
 
   final BookingDetail bookingDetail;
 
@@ -17,18 +14,16 @@ class BookingRecordItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 9),
       child: InkWell(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(8),
         onTap: () => Navigator.of(context).pushNamed(
           BookingDetailRecordScreen.routeName,
-          arguments: BookingDetailRecordScreenArguments(
-            bookingDetailID: bookingDetail.id!,
-          ),
+          arguments: BookingDetailRecordScreenArguments(bookingDetailID: bookingDetail.id!),
         ),
         child: Container(
           width: MediaQuery.of(context).size.width - 35,
           decoration: BoxDecoration(
             color: BookingDetailStatusMap.colorMap[bookingDetail.status],
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(color: Colors.black26, width: 1.5),
           ),
           child: Column(
@@ -37,10 +32,7 @@ class BookingRecordItem extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 5, bottom: 5),
                 child: Text(
                   bookingDetail.field!.name!,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
